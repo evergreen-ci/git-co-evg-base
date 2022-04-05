@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.14 - 2022-04-06
+- Update the message printed when no revision is found.
+
 ## 0.5.13 - 2022-04-06
 - Migrating to evergreen-ci organization in Github.
 
