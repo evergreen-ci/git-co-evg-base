@@ -1,12 +1,12 @@
 name: test-python-project
 
-on: 
+on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -32,16 +32,15 @@ jobs:
 
     - name: Test with pytest
       run: |
-        poetry run pytest 
+        poetry run pytest
 
     - name: Test pypi version
       run: |
         ./pypi-version-check
-    
+
     - name: Build docs
       working-directory: ./goodbase-docs
       run: |
         wget -q https://github.com/gohugoio/hugo/releases/download/v0.92.1/hugo_0.92.1_Linux-64bit.tar.gz
         tar xf hugo_0.92.1_Linux-64bit.tar.gz
         ./hugo
-

@@ -1,9 +1,9 @@
 name: Upload Python Package
 
-on: 
+on:
   workflow_run:
     workflows: ["test-python-project"]
-    branches: [master]
+    branches: [main]
     types:
       - completed
 
@@ -46,5 +46,5 @@ jobs:
       run: |
         wget -q https://github.com/dbradf/gh-pages-publish/releases/download/v0.2.0/gh-pages-publish-linux
         chmod +x gh-pages-publish-linux
-        git remote set-url --push origin https://dbradf:$GITHUB_TOKEN@github.com/dbradf/git-co-evg-base
+        git remote set-url --push origin https://evergreen-ci:$GITHUB_TOKEN@github.com/evergreen-ci/git-co-evg-base
         ./gh-pages-publish-linux --docs-dir goodbase-docs/public --verbose

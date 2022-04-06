@@ -2,7 +2,7 @@
 
 Find and checkout a recent git commit that matches the specified criteria.
 
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/dbradf/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/dbradf/git-co-evg-base/actions/workflows/deploy.yml) [![test-python-project](https://github.com/dbradf/git-co-evg-base/actions/workflows/test.yml/badge.svg)](https://github.com/dbradf/git-co-evg-base/actions/workflows/test.yml) [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://dbradf.github.io/git-co-evg-base/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml) [![test-python-project](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/test.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/test.yml) [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://evergreen-ci.github.io/git-co-evg-base/)
 
 ## Table of contents
 
@@ -34,7 +34,7 @@ git commit to start work from.
 
 ## Documentation
 
-Documentation can be found [here](https://dbradf.github.io/git-co-evg-base/).
+Documentation can be found [here](https://evergreen-ci.github.io/git-co-evg-base/).
 
 ## Dependencies
 
@@ -53,7 +53,7 @@ $ pipx install git-co-evg-base
 
 ## Usage
 
-Detailed usage documentation can be found [here](https://github.com/dbradf/git-co-evg-base/tree/master/docs/usage.md).
+Detailed usage documentation can be found [here](https://github.com/evergreen-ci/git-co-evg-base/tree/main/docs/usage.md).
 
 ```
 Usage: git-co-evg-base [OPTIONS]
@@ -101,7 +101,7 @@ Examples:
   Starting a new change, to ensure that there are no systemic failures on the base commit:
 
       git co-evg-base --pass-threshold 0.98
-      
+
 Options:
   --passing-task TEXT             Specify a task that needs to be passing (can be specified
                                   multiple times).
@@ -139,7 +139,7 @@ Checkout using the default criteria:
 $ git co-evg-base
 ```
 
-Checkout with successful tasks 'auth' and 'auth_audit' on builds 'enterprise-windows' and 
+Checkout with successful tasks 'auth' and 'auth_audit' on builds 'enterprise-windows' and
 'enterprise-rhel-80-64-bit' and 95% of the tasks are passing.
 
 ```bash
@@ -160,7 +160,7 @@ poetry install
 
 ### linting/formatting
 
-This project uses [black](https://black.readthedocs.io/en/stable/) and 
+This project uses [black](https://black.readthedocs.io/en/stable/) and
 [isort](https://pycqa.github.io/isort/) for formatting.
 
 ```bash
@@ -178,7 +178,7 @@ poetry run pytest
 
 ### Automatically running checks on commit
 
-This project has [pre-commit](https://pre-commit.com/) configured. Pre-commit will run 
+This project has [pre-commit](https://pre-commit.com/) configured. Pre-commit will run
 configured checks at git commit time. To enable pre-commit on your local repository run:
 
 ```bash
@@ -197,7 +197,7 @@ Please open a Github Pull Request for code review.
 
 ### Deployment
 
-Deployment to pypi is automatically triggered on merges to master.
+Deployment to pypi is automatically triggered on merges to main.
 
 ## Resources
 
