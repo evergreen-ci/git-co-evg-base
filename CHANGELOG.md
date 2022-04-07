@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.15 - 2022-04-07
+- Setup evergreen project.
+
 ## 0.5.14 - 2022-04-06
 - Update the message printed when no revision is found.
 

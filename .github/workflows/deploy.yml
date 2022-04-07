@@ -1,11 +1,9 @@
 name: Upload Python Package
 
 on:
-  workflow_run:
-    workflows: ["test-python-project"]
-    branches: [main]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:

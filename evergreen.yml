@@ -103,7 +103,7 @@ functions:
   build_docs:
     - command: shell.exec
       params:
-        working_dir: src/emm-docs
+        working_dir: src/goodbase-docs
         script: |
           set -o errexit
           set -o verbose
