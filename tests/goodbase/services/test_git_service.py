@@ -63,7 +63,7 @@ class TestDetermineDirectory:
         assert Path.cwd() == under_test.GitService._determine_directory()
 
     def test_absolute_directory_should_return_self(self):
-        directory = Path("/path/to/directory")
+        directory = Path("/path/to/directory").absolute()
 
         assert directory == under_test.GitService._determine_directory(directory)
 
