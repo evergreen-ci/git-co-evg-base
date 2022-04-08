@@ -4,8 +4,8 @@ buildvariants:
     run_on:
       - ubuntu1804-small
     tasks:
-#      - name: unit_tests_3.7
-#      - name: unit_tests_3.8
+      - name: unit_tests_3.7
+      - name: unit_tests_3.8
       - name: unit_tests_3.9
       - name: check_pypi_version
       - name: build_docs
@@ -15,8 +15,8 @@ buildvariants:
     run_on:
       - windows-64-vsMulti-small
     tasks:
-#      - name: unit_tests_3.7
-#      - name: unit_tests_3.8
+      - name: unit_tests_3.7
+      - name: unit_tests_3.8
       - name: unit_tests_3.9
 
   - display_name: macOS Mojave
@@ -24,8 +24,8 @@ buildvariants:
     run_on:
       - macos-1014
     tasks:
-#      - name: unit_tests_3.7
-#      - name: unit_tests_3.8
+      - name: unit_tests_3.7
+      - name: unit_tests_3.8
       - name: unit_tests_3.9
 
 functions:
@@ -122,21 +122,21 @@ post:
     file: src/junit-*.xml
 
 tasks:
-#- name: unit_tests_3.7
-#  commands:
-#    - func: install_poetry
-#      vars:
-#        python_version: "3.7.1"
-#        short_python_version: "37"
-#    - func: run_tests
-#
-#- name: unit_tests_3.8
-#  commands:
-#    - func: install_poetry
-#      vars:
-#        python_version: "3.8.10"
-#        short_python_version: "38"
-#    - func: run_tests
+- name: unit_tests_3.7
+  commands:
+    - func: install_poetry
+      vars:
+        python_version: "3.7.1"
+        short_python_version: "37"
+    - func: run_tests
+
+- name: unit_tests_3.8
+  commands:
+    - func: install_poetry
+      vars:
+        python_version: "3.8.10"
+        short_python_version: "38"
+    - func: run_tests
 
 - name: unit_tests_3.9
   commands:
