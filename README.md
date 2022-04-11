@@ -38,7 +38,7 @@ Documentation can be found [here](https://evergreen-ci.github.io/git-co-evg-base
 
 ## Dependencies
 
-* Python 3.8 or later
+* Python 3.7 or later
 * git
 * [Evergreen config file](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
 
