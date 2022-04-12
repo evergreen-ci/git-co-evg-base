@@ -17,6 +17,7 @@ from rich.table import Table
 from structlog.stdlib import LoggerFactory
 
 from goodbase.build_checker import BuildChecks
+from goodbase.clients.evg_cli_proxy import EvgCliProxy
 from goodbase.goodbase_options import GoodBaseOptions, OutputFormat
 from goodbase.services.criteria_service import CriteriaService
 from goodbase.services.evg_service import EvergreenService
@@ -418,6 +419,7 @@ def main(
     def dependencies(binder: inject.Binder) -> None:
         binder.bind(EvergreenApi, evg_api)
         binder.bind(GoodBaseOptions, options)
+        binder.bind_to_provider(EvgCliProxy, EvgCliProxy.create)
 
     inject.configure(dependencies)
 

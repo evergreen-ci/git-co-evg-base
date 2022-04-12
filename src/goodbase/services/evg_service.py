@@ -4,12 +4,13 @@ from pathlib import Path
 from typing import Dict, List
 
 import inject
+import yaml
 from evergreen import EvergreenApi, Version
 from requests.exceptions import HTTPError
 
 from goodbase.build_checker import BuildChecks
+from goodbase.clients.evg_cli_proxy import EvgCliProxy
 from goodbase.models.build_status import BuildStatus
-from goodbase.services.file_service import FileService
 
 N_THREADS = 16
 
@@ -18,15 +19,15 @@ class EvergreenService:
     """A service to interact with Evergreen."""
 
     @inject.autoparams()
-    def __init__(self, evg_api: EvergreenApi, file_service: FileService) -> None:
+    def __init__(self, evg_api: EvergreenApi, evg_cli_proxy: EvgCliProxy) -> None:
         """
         Initialize the service.
 
         :param evg_api: Evergreen API client.
-        :param file_service: File service.
+        :param evg_cli_proxy: Proxy for evergreen cli.
         """
         self.evg_api = evg_api
-        self.file_service = file_service
+        self.evg_cli_proxy = evg_cli_proxy
 
     def analyze_build(self, build_id: str) -> BuildStatus:
         """
@@ -122,5 +123,5 @@ class EvergreenService:
         :return: Dictionary of modules and their paths.
         """
         project_config_location = self.get_project_config_location(project_id)
-        project_config = self.file_service.read_yaml_file(Path(project_config_location))
+        project_config = yaml.safe_load(self.evg_cli_proxy.evaluate(Path(project_config_location)))
         return {module["name"]: module["prefix"] for module in project_config.get("modules", [])}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 - 2022-04-12
+
+- Evaluate evergreen project configuration before using it.
+
 ## 1.0.0 - 2022-04-08
 - Add support for Python 3.7.
 

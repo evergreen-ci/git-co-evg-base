@@ -4,13 +4,14 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock
 
 import pytest
+import yaml
 from evergreen import Build, EvergreenApi, Manifest, Project, Task, Version
 from evergreen.manifest import ManifestModule
 from requests.exceptions import HTTPError
 
 import goodbase.services.evg_service as under_test
 from goodbase.build_checker import BuildChecks
-from goodbase.services.file_service import FileService
+from goodbase.clients.evg_cli_proxy import EvgCliProxy
 
 
 class TaskStatus(int, Enum):
@@ -68,9 +69,9 @@ def build_mock_project_config() -> Dict[str, Any]:
 
 
 @pytest.fixture()
-def file_service():
-    file_service = MagicMock(spec_set=FileService)
-    file_service.read_yaml_file.return_value = build_mock_project_config()
+def evg_cli_proxy():
+    file_service = MagicMock(spec_set=EvgCliProxy)
+    file_service.evaluate.return_value = yaml.safe_dump(build_mock_project_config())
     return file_service
 
 
@@ -85,13 +86,13 @@ def evergreen_api():
 
 
 @pytest.fixture()
-def evg_service(evergreen_api, file_service):
-    evg_service = under_test.EvergreenService(evergreen_api, file_service)
+def evg_service(evergreen_api, evg_cli_proxy):
+    evg_service = under_test.EvergreenService(evergreen_api, evg_cli_proxy)
     return evg_service
 
 
 def mock_project_config(service, project_config):
-    service.file_service.read_yaml_file.return_value = project_config
+    service.evaluate.return_value = yaml.safe_dump(project_config)
 
 
 def mock_task_list_for_build(service, task_list: Dict[str, List[Task]]):
@@ -315,8 +316,10 @@ class TestGetModuleLocations:
 
         assert project_locations == {f"module {i}": f"path/to/{i}" for i in range(4)}
 
-    def test_module_locations__with_no_modules_in_project_should_be_empty(self, evg_service):
-        mock_project_config(evg_service, {})
+    def test_module_locations_with_no_modules_in_project_should_be_empty(
+        self, evg_service, evg_cli_proxy
+    ):
+        mock_project_config(evg_cli_proxy, {})
         project_locations = evg_service.get_module_locations("project 2")
 
         assert project_locations == {}
