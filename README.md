@@ -54,6 +54,28 @@ this tool. This will isolate the dependencies and ensure they don't conflict wit
 $ pipx install git-co-evg-base
 ```
 
+### Debugging installation issues
+
+A common issue that arises during installation is pipx failing to install git-co-evg-base and printing out the following error:
+```bash
+$ pipx install git-co-evg-base
+Fatal error from pip prevented installation. Full pip output in file:
+    /home/ubuntu/.local/pipx/logs/cmd_2022-03-31_13.24.42_pip_errors.log
+ 
+Some possibly relevant errors from pip install:
+    ERROR: Could not find a version that satisfies the requirement git-co-evg-base (from versions: none)
+    ERROR: No matching distribution found for git-co-evg-base
+ 
+Error installing git-co-evg-base.
+```
+
+This error indicates that pipx could not find a version of git-co-evg-base that was built to support the version of Python installed on your machine.
+Make sure to check that your version of Python matches the requirements called out in the [Dependencies](#dependencies) section. You
+can check the version of Python that is on your computer by running
+```bash
+$ python --version
+```
+
 ## Usage
 
 Detailed usage documentation can be found [here](https://github.com/evergreen-ci/git-co-evg-base/tree/main/docs/usage.md).
