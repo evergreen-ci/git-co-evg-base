@@ -316,7 +316,9 @@ class TestGetModuleLocations:
 
         assert project_locations == {f"module {i}": f"path/to/{i}" for i in range(4)}
 
-    def test_module_locations_with_no_modules_in_project_should_be_empty(self, evg_service, evg_cli_proxy):
+    def test_module_locations_with_no_modules_in_project_should_be_empty(
+        self, evg_service, evg_cli_proxy
+    ):
         mock_project_config(evg_cli_proxy, {})
         project_locations = evg_service.get_module_locations("project 2")
 
