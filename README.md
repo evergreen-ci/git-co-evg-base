@@ -6,12 +6,14 @@ Find and checkout a recent git commit that matches the specified criteria.
 
 ## Table of contents
 
-1. [Description](#description)
-2. [Documentation](#documentation)
-3. [Dependencies](#dependencies)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Contributor's Guide](#contributors-guide)
+- [git-co-evg-base](#git-co-evg-base)
+  - [Table of contents](#table-of-contents)
+  - [Description](#description)
+  - [Documentation](#documentation)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributor's Guide](#contributors-guide)
     - [Setting up a local development environment](#setting-up-a-local-development-environment)
     - [linting/formatting](#lintingformatting)
     - [Running tests](#running-tests)
@@ -19,7 +21,7 @@ Find and checkout a recent git commit that matches the specified criteria.
     - [Versioning](#versioning)
     - [Code Review](#code-review)
     - [Deployment](#deployment)
-7. [Resources](#resources)
+  - [Resources](#resources)
 
 ## Description
 
@@ -41,6 +43,7 @@ Documentation can be found [here](https://evergreen-ci.github.io/git-co-evg-base
 * Python 3.7 or later
 * git
 * [Evergreen config file](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
+* [Evergreen CLI](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
 
 ## Installation
 
