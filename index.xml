@@ -23,8 +23,9 @@ There are 4 types of criteria that can be specified.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/getting-started/installation/</guid>
-      <description>Prerequisites      git Evergreen config file  Installation     We strongly recommend using a tool like pipx to install this tool. This will isolate the dependencies and ensure they don&amp;rsquo;t conflict with other tools.
-$ pipx install git-co-evg-base </description>
+      <description>Dependencies     You&amp;rsquo;ll need an installation of Python on your computer. It needs to be version 3.7.1 or higher.
+ git: Version 2.17 or higher Evergreen config file evergreen: The evergreen command line tool.  Installation     We strongly recommend using a tool like pipx to install this tool. This will isolate the dependencies and ensure they don&amp;rsquo;t conflict with other tools.
+$ pipx install git-co-evg-base Debugging installation issues     A common issue that arises during installation is pipx failing to install git-co-evg-base and printing out the following error:</description>
     </item>
     
     <item>
@@ -105,7 +106,7 @@ Exporting criteria rules     The --export-criteria option will export saved crit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     1.0.1 - 2022-04-12      Evaluate evergreen project configuration before using it.  1.0.0 - 2022-04-08      Add support for Python 3.7.  0.5.15 - 2022-04-07      Setup evergreen project.  0.5.14 - 2022-04-06      Update the message printed when no revision is found.  0.5.13 - 2022-04-06      Migrating to evergreen-ci organization in Github.</description>
+      <description>Changelog     1.0.2 - 2022-04-12      Document how to fix common pipx install error.  1.0.1 - 2022-04-12      Evaluate evergreen project configuration before using it.  1.0.0 - 2022-04-08      Add support for Python 3.7.  0.5.15 - 2022-04-07      Setup evergreen project.  0.5.14 - 2022-04-06      Update the message printed when no revision is found.</description>
     </item>
     
   </channel>
