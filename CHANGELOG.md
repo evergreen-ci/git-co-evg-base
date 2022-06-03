@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3 - 2022-06-02
+- Document default values for criteria.
+
 ## 1.0.2 - 2022-04-12
 - Document how to fix common pipx install error.
 

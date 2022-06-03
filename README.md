@@ -106,7 +106,7 @@ Criteria:
   * Specific tasks that must have run in each build (if they are part of that build).
 
   If criteria are not specified, a success threshold of 0.95 will be used and
-  all other 3 options will have a default value of None (which simulates the effect of not having a value).
+  all other 3 options will have a default value of none.
   
   Additionally, you can specify which build variants the criteria should be checked against. By
   default, only builds that end in 'required' will be checked.
@@ -135,11 +135,12 @@ Options:
                                   times).
   --run-threshold FLOAT           Specify the percentage of tasks that need to be run.
   --pass-threshold FLOAT          Specify the percentage of tasks that need to be successful.
-  --evg-config-file PATH          File containing evergreen authentication information.
-  --evg-project TEXT              Evergreen project to query against.
+  --evg-config-file PATH          File containing evergreen authentication information [default=~/.evergreen.yml].
+  --evg-project TEXT              Evergreen project to query against [default=mongodb-mongo-
+                                  master].
   --build-variant TEXT            Regex of Build variants to check (can be specified multiple
-                                  times).
-  --commit-lookback INTEGER       Number of commits to check before giving up
+                                  times) [default=.*-required$].
+  --commit-lookback INTEGER       Number of commits to check before giving up [default=50].
   --timeout-secs INTEGER          Number of seconds to search for before giving up.
   --commit-limit TEXT             Oldest commit to check before giving up.
   --git-operation [checkout|rebase|merge|none]
