@@ -105,8 +105,8 @@ Criteria:
 
   * Specific tasks that must have run in each build (if they are part of that build).
 
-  If criteria are not specified, a success threshold of 0.95 will be used and
-  all other 3 options will have a default value of none.
+  If no criteria are specified, a success threshold of 0.95 will be used and
+  the other 3 above options will be null.
   
   Additionally, you can specify which build variants the criteria should be checked against. By
   default, only builds that end in 'required' will be checked.
