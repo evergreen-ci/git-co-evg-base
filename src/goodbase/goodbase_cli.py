@@ -255,21 +255,23 @@ def configure_logging(verbose: bool) -> None:
     "--evg-config-file",
     default=DEFAULT_EVG_CONFIG,
     type=click.Path(exists=True),
-    help="File containing evergreen authentication information.",
+    help=f"File containing evergreen authentication information [default={DEFAULT_EVG_CONFIG}].",
 )
 @click.option(
-    "--evg-project", default=DEFAULT_EVG_PROJECT, help="Evergreen project to query against."
+    "--evg-project",
+    default=DEFAULT_EVG_PROJECT,
+    help=f"Evergreen project to query against [default={DEFAULT_EVG_PROJECT}].",
 )
 @click.option(
     "--build-variant",
     multiple=True,
-    help="Regex of Build variants to check (can be specified multiple times).",
+    help="Regex of Build variants to check (can be specified multiple times) [default=.*-required$].",
 )
 @click.option(
     "--commit-lookback",
     type=int,
     default=MAX_LOOKBACK,
-    help="Number of commits to check before giving up",
+    help=f"Number of commits to check before giving up [default={MAX_LOOKBACK}].",
 )
 @click.option("--timeout-secs", type=int, help="Number of seconds to search for before giving up.")
 @click.option(
@@ -354,7 +356,8 @@ def main(
     * Specific tasks that must have passed in each build (if they are part of that build).\n
     * Specific tasks that must have run in each build (if they are part of that build).\n
 
-    If not criteria are specified, a success threshold of 0.95 will be used.
+    If no criteria are specified, a success threshold of 0.95 will be used and
+    the other 3 above options will be null.
 
     Additionally, you can specify which build variants the criteria should be checked against. By
     default, only builds that end in 'required' will be checked.
