@@ -1,6 +1,6 @@
 # git-co-evg-base
 
-Find and checkout a recent git commit that matches the specified criteria.
+Find a recent git commit that matches the specified criteria.
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml) [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://evergreen-ci.github.io/git-co-evg-base/)
 
@@ -31,7 +31,7 @@ This way if you encounter any failures in your patch build, you can easily
 compare the failure with what was seen in the base commit to understand if
 your changes may have introduced the failure.
 
-This command allows you to specify criteria to use to find and checkout a
+This command allows you to specify criteria to use to find a
 git commit to start work from.
 
 ## Documentation
@@ -83,14 +83,14 @@ Detailed usage documentation can be found [here](https://github.com/evergreen-ci
 ```
 Usage: git-co-evg-base [OPTIONS]
 
-  Find and checkout a recent git commit that matches the specified criteria.
+  Find a recent git commit that matches the specified criteria.
 
   When running an Evergreen patch build, it can be useful that base your changes on a commit in
   which the tests in Evergreen have already been run. This way if you encounter any failures in
   your patch build, you can easily compare the failure with what was seen in the base commit to
   understand if your changes may have introduced the failure.
 
-  This command allows you to specify criteria to use to find and checkout a git commit to start
+  This command allows you to specify criteria to use to find a git commit to start
   work from.
 
 Criteria:
@@ -144,7 +144,7 @@ Options:
   --timeout-secs INTEGER          Number of seconds to search for before giving up.
   --commit-limit TEXT             Oldest commit to check before giving up.
   --git-operation [checkout|rebase|merge|none]
-                                  Git operations to perform with found commit [default=checkout].
+                                  Git operations to perform with found commit [default=none].
   -b, --branch TEXT               Name of branch to create on checkout.
   --save-criteria TEXT            Save the specified criteria rules under the specified name for
                                   future use.

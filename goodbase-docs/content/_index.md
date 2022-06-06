@@ -1,6 +1,6 @@
 # git-co-evg-base Documentation
 
-Find and checkout a recent git commit that matches the specified criteria.
+Find a recent git commit that matches the specified criteria.
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml)
 
@@ -10,5 +10,5 @@ This way if you encounter any failures in your patch build, you can easily
 compare the failure with what was seen in the base commit to understand if
 your changes may have introduced the failure.
 
-This command allows you to specify criteria to use to find and checkout a
+This command allows you to specify criteria to use to find a
 git commit to start work from.

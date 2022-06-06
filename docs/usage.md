@@ -108,8 +108,7 @@ git co-evg-base --pass-threshold 0.95 --evg-project mongodb-mongo-v5.0
 ## Performing git actions when the criteria are meet
 
 Once a revision that meets the specified criteria is found, that revision can be used to perform
-certain git operations. By default, a git checkout will be performed to checkout the revision
-in the local repository. However, the `--git-operation` option can be provided to change this
+certain git operations. By default, no git operation will be performed. However, the `--git-operation` option can be provided to change this
 behavior.
 
 The option takes one of the following as an argument:
