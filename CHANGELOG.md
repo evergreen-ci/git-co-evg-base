@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0 - 2022-06-06
+- Change the default behavior to not checkout by default.
+
 ## 1.0.3 - 2022-06-02
 - Document default values for criteria.
 

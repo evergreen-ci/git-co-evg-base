@@ -282,8 +282,8 @@ def configure_logging(verbose: bool) -> None:
 @click.option(
     "--git-operation",
     type=click.Choice([a.value for a in GitAction]),
-    default=GitAction.CHECKOUT,
-    help="Git operations to perform with found commit [default=checkout].",
+    default=GitAction.NONE,
+    help="Git operations to perform with found commit [default=none].",
 )
 @click.option("-b", "--branch", help="Name of branch to create on checkout.")
 @click.option(
@@ -337,14 +337,14 @@ def main(
     verbose: bool,
 ) -> None:
     """
-    Find and checkout a recent git commit that matches the specified criteria.
+    Find and perform git actions on a recent commit that matches the specified criteria.
 
     When running an Evergreen patch build, it can be useful that base your changes on a commit
     in which the tests in Evergreen have already been run. This way if you encounter any failures
     in your patch build, you can easily compare the failure with what was seen in the base commit
     to understand if your changes may have introduced the failure.
 
-    This command allows you to specify criteria to use to find and checkout a git commit to
+    This command allows you to specify criteria to use to find a git commit to
     start work from.
 
     Criteria
