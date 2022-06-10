@@ -337,7 +337,7 @@ def main(
     verbose: bool,
 ) -> None:
     """
-    Find a recent git commit that matches the specified criteria.
+    Find and perform git actions on a recent commit that matches the specified criteria.
 
     When running an Evergreen patch build, it can be useful that base your changes on a commit
     in which the tests in Evergreen have already been run. This way if you encounter any failures

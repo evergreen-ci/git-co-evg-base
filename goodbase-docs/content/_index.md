@@ -1,6 +1,6 @@
 # git-co-evg-base Documentation
 
-Find a recent git commit that matches the specified criteria.
+Find and perform git actions on a recent commit that matches the specified criteria.
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml)
 

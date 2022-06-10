@@ -1,6 +1,6 @@
 # git-co-evg-base
 
-Find a recent git commit that matches the specified criteria.
+Find and perform git actions on a recent commit that matches the specified criteria.
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml) [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://evergreen-ci.github.io/git-co-evg-base/)
 
@@ -83,7 +83,7 @@ Detailed usage documentation can be found [here](https://github.com/evergreen-ci
 ```
 Usage: git-co-evg-base [OPTIONS]
 
-  Find a recent git commit that matches the specified criteria.
+  Find and perform git actions on a recent commit that matches the specified criteria.
 
   When running an Evergreen patch build, it can be useful that base your changes on a commit in
   which the tests in Evergreen have already been run. This way if you encounter any failures in
