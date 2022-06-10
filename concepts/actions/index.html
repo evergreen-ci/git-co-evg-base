@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.92.1" />
 
 
-  <meta name="description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, a git checkout will be performed to checkout the revision in the local repository. However, the --git-operation option can be provided to change this behavior.
+  <meta name="description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, no git action will be performed. However, the --git-operation option can be provided to change this behavior.
 The option takes one of the following as an argument:
  checkout [default] - Perform a git checkout to checkout the found revision." />
 
@@ -33,7 +33,7 @@ The option takes one of the following as an argument:
     
   <meta property="og:title" content="Actions" />
   <meta property="og:site_name" content="Git Checkout Evergreen Base Documentation" />
-  <meta property="og:description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, a git checkout will be performed to checkout the revision in the local repository. However, the --git-operation option can be provided to change this behavior.
+  <meta property="og:description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, no git action will be performed. However, the --git-operation option can be provided to change this behavior.
 The option takes one of the following as an argument:
  checkout [default] - Perform a git checkout to checkout the found revision." />
 <meta property="og:type" content="article" />
@@ -42,13 +42,13 @@ The option takes one of the following as an argument:
 <meta property="article:section" content="Concepts" />
     <meta
       property="article:modified_time"
-      content="2022-02-12T14:15:21-05:00"
+      content="2022-06-11T00:40:38+05:00"
     />
 
 
       <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Actions" />
-  <meta name="twitter:description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, a git checkout will be performed to checkout the revision in the local repository. However, the --git-operation option can be provided to change this behavior.
+  <meta name="twitter:description" content="Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, no git action will be performed. However, the --git-operation option can be provided to change this behavior.
 The option takes one of the following as an argument:
  checkout [default] - Perform a git checkout to checkout the found revision." />
 
@@ -61,7 +61,7 @@ The option takes one of the following as an argument:
       "name": "Actions",
       "headline": "Actions",
       "alternativeHeadline": "",
-      "description": "Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, a git checkout will be performed to checkout the revision in the local repository. However, the --git-operation option can be provided to change this behavior.\nThe option takes one of the following as an argument:\n checkout [default] - Perform a git checkout to checkout the found revision.",
+      "description": "Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, no git action will be performed. However, the --git-operation option can be provided to change this behavior.\nThe option takes one of the following as an argument:\n checkout [default] - Perform a git checkout to checkout the found revision.",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -72,7 +72,7 @@ The option takes one of the following as an argument:
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-02-12T14:15:21.00Z",
+      "dateModified": "2022-06-11T00:40:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Git Checkout Evergreen Base Documentation",
@@ -85,7 +85,7 @@ The option takes one of the following as an argument:
           }
       },
       "url" : "https:\/\/evergreen-ci.github.io\/git-co-evg-base\/concepts\/actions\/",
-      "wordCount" : "374",
+      "wordCount" : "366",
   }
   </script>
 
@@ -995,8 +995,7 @@ The option takes one of the following as an argument:
     </h2>
 </div>
 <p>Once a revision that meets the specified criteria is found, that revision can be used to perform
-certain git operations. By default, a git checkout will be performed to checkout the revision
-in the local repository. However, the <code>--git-operation</code> option can be provided to change this
+certain git operations. By default, no git action will be performed. However, the <code>--git-operation</code> option can be provided to change this
 behavior.</p>
 <p>The option takes one of the following as an argument:</p>
 <ul>

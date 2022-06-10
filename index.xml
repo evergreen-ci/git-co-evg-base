@@ -54,7 +54,7 @@ If for some reason the .evergreen.yml file that contains your username and api k
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/concepts/actions/</guid>
-      <description>Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, a git checkout will be performed to checkout the revision in the local repository. However, the --git-operation option can be provided to change this behavior.
+      <description>Performing git actions when the criteria are meet     Once a revision that meets the specified criteria is found, that revision can be used to perform certain git operations. By default, no git action will be performed. However, the --git-operation option can be provided to change this behavior.
 The option takes one of the following as an argument:
  checkout [default] - Perform a git checkout to checkout the found revision.</description>
     </item>
@@ -106,7 +106,7 @@ Exporting criteria rules     The --export-criteria option will export saved crit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     1.0.3 - 2022-06-02      Document default values for criteria.  1.0.2 - 2022-04-12      Document how to fix common pipx install error.  1.0.1 - 2022-04-12      Evaluate evergreen project configuration before using it.  1.0.0 - 2022-04-08      Add support for Python 3.7.  0.5.15 - 2022-04-07      Setup evergreen project.</description>
+      <description>Changelog     2.0.0 - 2022-06-06      Change the default behavior to not checkout by default.  1.0.3 - 2022-06-02      Document default values for criteria.  1.0.2 - 2022-04-12      Document how to fix common pipx install error.  1.0.1 - 2022-04-12      Evaluate evergreen project configuration before using it.  1.</description>
     </item>
     
   </channel>
