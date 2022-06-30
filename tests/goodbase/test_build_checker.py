@@ -31,6 +31,32 @@ class TestSuccessThreshold:
         assert not checker.check(build_status)
 
 
+class TestFailureThreshold:
+    def test_failure_threshold_is_met(self):
+        build_status = BuildStatus(
+            build_name="my build",
+            build_variant="my_build",
+            successful_tasks={f"task_{i}" for i in range(5)},
+            inactive_tasks=set(),
+            all_tasks={f"task_{i}" for i in range(10)},
+        )
+        checker = under_test.BuildChecks(build_variant_regex=["my_build"], failure_threshold=0.3)
+
+        assert checker.check(build_status)
+
+    def test_failure_threshold_is_not_met(self):
+        build_status = BuildStatus(
+            build_name="my build",
+            build_variant="my_build",
+            successful_tasks={f"task_{i}" for i in range(8)},
+            inactive_tasks=set(),
+            all_tasks={f"task_{i}" for i in range(10)},
+        )
+        checker = under_test.BuildChecks(build_variant_regex=["my_build"], failure_threshold=0.3)
+
+        assert not checker.check(build_status)
+
+
 class TestRunThreshold:
     def test_run_threshold_is_met(self):
         build_status = BuildStatus(

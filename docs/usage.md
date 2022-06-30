@@ -8,18 +8,19 @@ tasks are run on your base commit to make sure you have a base to compare your p
 
 ## Criteria
 
-There are 4 types of criteria that can be specified.
+There are 5 types of criteria that can be specified.
 
 * passing tasks
 * run tasks
 * pass threshold
+* fail threshold
 * run threshold
 
 #### Passing tasks
 
 Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria.
 They are specified with the `--passing-task` option. This option can be specified more than once
-to include multiple tasks. 
+to include multiple tasks.
 
 For example, to ensure I get a revision with the following three tasks passing: `auth`, `auth_audit`,
 and `noPassthrough`, I would run the following:
@@ -30,7 +31,7 @@ git co-evg-base --passing-task auth --passing-task auth_audit --passing-task noP
 
 #### Run tasks
 
-Run tasks are similar to passing tasks except they only need to have been executed, they do not 
+Run tasks are similar to passing tasks except they only need to have been executed, they do not
 need to have been successful. This can be useful when working on a fix for a known task failure.
 They are specified with the `--run-task` option. This option can be specified more than once
 to include multiple tasks.
@@ -46,12 +47,23 @@ git co-evg-base --run-task jsCore --run-task aggregation
 
 Pass threshold ensures that some percentage of tasks in the build variants must have passed to
 consider the revision. This can help minimize the number of unrelated failures that might show up
-in patch builds. This is specified with the `--pass-threshold` option. 
+in patch builds. This is specified with the `--pass-threshold` option.
 
 For example, to ensure that 85% of tasks have passed, I would run the following:
 
 ```bash
 git co-evg-base --pass-threshold 0.85
+```
+
+#### Fail threshold
+
+Fail threshold is opposite to the pass threshold. This can help to find the build with certain
+amount of failures.
+
+For example, to ensure that 15% of tasks have been failed, I would run the following:
+
+```bash
+git co-evg-base --fail-threshold 0.15
 ```
 
 #### Run threshold
@@ -82,12 +94,12 @@ git co-evg-base --pass-threshold 0.9 --passing-task noPassthrough --passing-task
 In projects with multiple build variants, you may not desire to apply the criteria to every build
 variant. The `--build-variant` option allows you to control which build variants the checks should
 apply. The option takes a regular expression as an argument. Any build variants that match against
-the regular express will have their criteria checked. 
+the regular express will have their criteria checked.
 
 The `--build-variant` option can be specified multiple times to provide multiple regular expression
 to check against.
 
-For example, to check that a task was successful on builds that end with "-required" and "-suggested", 
+For example, to check that a task was successful on builds that end with "-required" and "-suggested",
 I would run the following:
 
 ```bash
@@ -157,7 +169,7 @@ that was used in the Evergreen build.
 
 If any module is locally available in the location specified by the project's evergreen config
 file, the git operation performed on the base repository will also be performed on module's
-repository. This allows you to ensure that the modules stay in sync with what was run in 
+repository. This allows you to ensure that the modules stay in sync with what was run in
 Evergreen.
 
 Example of a repository with modules:
@@ -175,14 +187,14 @@ Found revision: 6fe24f53eb15a29249e3042609c9bd87d5e147ec
 Instead of typing out the criteria to search for on every execution, criteria can be saved under
 a given name and then referenced in future executions.
 
-The `--save-criteria` option will do this. It takes a name to save the criteria under as an 
+The `--save-criteria` option will do this. It takes a name to save the criteria under as an
 argument.  When the `--save-criteria` option is specified, the search for a revision will not
 occur. The criteria will only be saved.
 
-If `--save-criteria` is run with a previously saved name, there are two possible outcomes. 
+If `--save-criteria` is run with a previously saved name, there are two possible outcomes.
 
-(1) If the build variants match the previously specified build variants, the command will fail 
-and will need to be re-executed with the `--override` option if you want to overwrite the 
+(1) If the build variants match the previously specified build variants, the command will fail
+and will need to be re-executed with the `--override` option if you want to overwrite the
 previous criteria.
 
 (2) If the build variants do not match any previous specified build variants, then the criteria
@@ -197,7 +209,7 @@ Save a "b-grade" criteria with a pass threshold of 80% on all build variants.
 git co-evg-base --pass-threshold 0.8 --build-variant ".*" --save-criteria b-grade
 ```
 
-Save a required criteria with a pass threshold of 95% on all required build variants and the 
+Save a required criteria with a pass threshold of 95% on all required build variants and the
 "compile_dist_test" task passing on the "enterprise-macos" build variant.
 
 ```bash
@@ -207,7 +219,7 @@ git co-evg-base --passing-task compile_dist_test --build-variant "^enterprise-ma
 
 ### Using saved criteria
 
-Once a criteria has been saved, you can use the `--use-criteria` option to perform a search with 
+Once a criteria has been saved, you can use the `--use-criteria` option to perform a search with
 it. The option takes the name of the saved criteria as an argument
 
 #### Examples
@@ -243,13 +255,13 @@ git co-evg-base --list-criteria
 └───────────────────────┴───────────┴───────┴───────────────────┴───────────┘
 ```
 
-## Sharing Criteria 
+## Sharing Criteria
 
 You can use `--export-criteria` and `--import-criteria` to share criteria rules with others.
 
 ### Exporting criteria rules
 
-The `--export-criteria` option will export saved criteria to a file that can be shared. It takes 
+The `--export-criteria` option will export saved criteria to a file that can be shared. It takes
 the name of a saved criteria as a argument. The option can be specified multiple times to export
 multiple named criteria. The `--export-file` is required and takes as an argument that specified
 where the exported rules should be written.
@@ -289,10 +301,10 @@ The tool will limit how far back it will search before giving up. By default, it
 
 * **commit** [default=50]: The `--commit-lookback` option takes an argument that specifies how many
   commits to search before giving up.
-* **time**: The `--timeout-secs` option takes an argument that specifies how many seconds to search 
+* **time**: The `--timeout-secs` option takes an argument that specifies how many seconds to search
   before giving up. By default, there is no limit.
-* **specific commit**: The `--commit-limit` option takes an git commit hash for an argument once 
-  that commit is found, searching will stop. 
+* **specific commit**: The `--commit-limit` option takes an git commit hash for an argument once
+  that commit is found, searching will stop.
 
 ### Examples
 
@@ -322,13 +334,13 @@ git co-evg-base --commit-lookback 100 --timeout-secs 60 --commit-limit abc123
 
 ## Getting help
 
-You can get a list of all the available options with the `--help` option. 
+You can get a list of all the available options with the `--help` option.
 
 **Note**: When using the `--help` option, you will need to call the command directly via `git-co-evg-base`
-and not execute it via `git` (i.e. `git co-evg-base`, note the space after `git`). This is due to 
+and not execute it via `git` (i.e. `git co-evg-base`, note the space after `git`). This is due to
 a limitation in the git help system.
 
-Additionally, there is a `--verbose` option that can be specified to get more detailed information 
+Additionally, there is a `--verbose` option that can be specified to get more detailed information
 about what the command is doing.
 
 ## Other details
@@ -340,5 +352,5 @@ the evergreen command line tool as described [here](https://github.com/evergreen
 everything should be setup for the tool to function.
 
 If for some reason the `.evergreen.yml` file that contains your username and api key is not in your
-home directory, you will need to use the `--evg-config-file` option to specify the location when 
+home directory, you will need to use the `--evg-config-file` option to specify the location when
 running the command.

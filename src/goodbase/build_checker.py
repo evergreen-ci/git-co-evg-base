@@ -16,6 +16,7 @@ class BuildChecks(BaseModel):
 
     build_variant_regex: List of build variant regexes to which checks should apply.
     success_threshold: Percentage of tasks that need to pass to use the build.
+    failure_threshold: Percentage of tasks that need to fail to use the build.
     run_threshold: Percentage of tasks that need to have run to use the build.
     successful_tasks: Set of tasks that need to have passed to use the build.
     active_tasks: Set of tasks that need to have run to use the build.
@@ -23,6 +24,7 @@ class BuildChecks(BaseModel):
 
     build_variant_regex: List[str]
     success_threshold: Optional[float] = None
+    failure_threshold: Optional[float] = None
     run_threshold: Optional[float] = None
     successful_tasks: Optional[Set[str]] = None
     active_tasks: Optional[Set[str]] = None
@@ -52,6 +54,15 @@ class BuildChecks(BaseModel):
                 build=build_status.build_name,
                 expected_success=self.success_threshold,
                 actual_success=build_status.success_pct(),
+            )
+            return False
+
+        if self.failure_threshold and build_status.failure_pct() < self.failure_threshold:
+            LOGGER.debug(
+                "Unmet criteria, failure_threshold",
+                build=build_status.build_name,
+                expected_failure=self.failure_threshold,
+                actual_failure=build_status.failure_pct(),
             )
             return False
 

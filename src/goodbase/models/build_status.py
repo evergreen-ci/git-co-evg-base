@@ -25,6 +25,10 @@ class BuildStatus:
         """Percentage of tasks that were successful."""
         return len(self.successful_tasks) / len(self.all_tasks)
 
+    def failure_pct(self) -> float:
+        """Percentage of tasks that were failed."""
+        return 1.0 - len(self.successful_tasks) / len(self.all_tasks)
+
     def active_pct(self) -> float:
         """Percent of tasks that were activated."""
         return 1.0 - len(self.inactive_tasks) / len(self.all_tasks)

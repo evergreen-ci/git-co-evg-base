@@ -8,12 +8,23 @@ class TestBuildStatus:
         build_status = under_test.BuildStatus(
             build_name="build name",
             build_variant="build_name",
-            successful_tasks={f"task {i}" for i in range(5)},
+            successful_tasks={f"task {i}" for i in range(6)},
             inactive_tasks=set(),
             all_tasks={f"task {i}" for i in range(10)},
         )
 
-        assert build_status.success_pct() == 0.5
+        assert build_status.success_pct() == 0.6
+
+    def test_failure_percent_should_be_percent_of_failed_tasks(self):
+        build_status = under_test.BuildStatus(
+            build_name="build name",
+            build_variant="build_name",
+            successful_tasks={f"task {i}" for i in range(6)},
+            inactive_tasks=set(),
+            all_tasks={f"task {i}" for i in range(10)},
+        )
+
+        assert build_status.failure_pct() == 0.4
 
     def test_active_pct_should_be_percent_of_active_tasks(self):
         build_status = under_test.BuildStatus(
