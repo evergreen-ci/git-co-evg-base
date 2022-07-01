@@ -252,6 +252,11 @@ def configure_logging(verbose: bool) -> None:
     help="Specify the percentage of tasks that need to be successful.",
 )
 @click.option(
+    "--fail-threshold",
+    type=float,
+    help="Specify the percentage of tasks that need to be failed.",
+)
+@click.option(
     "--evg-config-file",
     default=DEFAULT_EVG_CONFIG,
     type=click.Path(exists=True),
@@ -318,6 +323,7 @@ def main(
     run_task: List[str],
     run_threshold: float,
     pass_threshold: float,
+    fail_threshold: float,
     evg_config_file: str,
     evg_project: str,
     build_variant: List[str],
@@ -349,15 +355,16 @@ def main(
 
     Criteria
 
-    There are 4 criteria that can be specified:
+    There are 5 criteria that can be specified:
 
     * The percentage of tasks that have passed in each build.\n
+    * The percentage of tasks that have failed in each build.\n
     * The percentage of tasks that have run in each build.\n
     * Specific tasks that must have passed in each build (if they are part of that build).\n
     * Specific tasks that must have run in each build (if they are part of that build).\n
 
     If no criteria are specified, a success threshold of 0.95 will be used and
-    the other 3 above options will be null.
+    the other 4 above options will be null.
 
     Additionally, you can specify which build variants the criteria should be checked against. By
     default, only builds that end in 'required' will be checked.
@@ -406,6 +413,9 @@ def main(
     if pass_threshold is not None:
         build_checks.success_threshold = pass_threshold
 
+    if fail_threshold is not None:
+        build_checks.failure_threshold = fail_threshold
+
     if run_threshold is not None:
         build_checks.run_threshold = run_threshold
 
@@ -416,7 +426,7 @@ def main(
         build_checks.active_tasks = set(run_task)
 
     # If no criteria were specified, use the default.
-    if not any([pass_threshold, run_threshold, passing_task, run_task]):
+    if not any([pass_threshold, fail_threshold, run_threshold, passing_task, run_task]):
         build_checks.success_threshold = DEFAULT_THRESHOLD
 
     def dependencies(binder: inject.Binder) -> None:

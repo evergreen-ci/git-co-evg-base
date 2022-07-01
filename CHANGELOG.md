@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0 - 2022-06-30
+- Add failure threshold criteria.
+
 ## 2.0.0 - 2022-06-06
 - Change the default behavior to not checkout by default.
 

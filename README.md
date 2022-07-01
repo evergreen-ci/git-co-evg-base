@@ -61,11 +61,11 @@ A common issue that arises during installation is pipx failing to install git-co
 $ pipx install git-co-evg-base
 Fatal error from pip prevented installation. Full pip output in file:
     /home/ubuntu/.local/pipx/logs/cmd_2022-03-31_13.24.42_pip_errors.log
- 
+
 Some possibly relevant errors from pip install:
     ERROR: Could not find a version that satisfies the requirement git-co-evg-base (from versions: none)
     ERROR: No matching distribution found for git-co-evg-base
- 
+
 Error installing git-co-evg-base.
 ```
 
@@ -90,14 +90,15 @@ Usage: git-co-evg-base [OPTIONS]
   your patch build, you can easily compare the failure with what was seen in the base commit to
   understand if your changes may have introduced the failure.
 
-  This command allows you to specify criteria to use to find a git commit to start
-  work from.
+  This command allows you to specify criteria to use to find a git commit to start work from.
 
-Criteria:
+  Criteria
 
-  There are 4 criteria that can be specified:
+  There are 5 criteria that can be specified:
 
   * The percentage of tasks that have passed in each build.
+
+  * The percentage of tasks that have failed in each build.
 
   * The percentage of tasks that have run in each build.
 
@@ -105,24 +106,24 @@ Criteria:
 
   * Specific tasks that must have run in each build (if they are part of that build).
 
-  If no criteria are specified, a success threshold of 0.95 will be used and
-  the other 3 above options will be null.
-  
+  If no criteria are specified, a success threshold of 0.95 will be used and the other 4 above
+  options will be null.
+
   Additionally, you can specify which build variants the criteria should be checked against. By
   default, only builds that end in 'required' will be checked.
 
-Notes:
+  Notes
 
   If you have any evergreen modules with local checkouts in the location specified in your
   project's evergreen.yml configuration file. They will automatically be checked out to the
   revision that was run in Evergreen with the revision of the base project.
 
-Examples:
+  Examples
 
   Working on a fix for a task 'replica_sets' on the build variants 'enterprise-rhel-80-64-bit' and
   'enterprise-windows', to ensure the task has been run on those build variants:
 
-      git co-evg-base --run-task replica_sets --build-variant enterprise-rhel-80-64-bit --build-variant --enterprise-windows
+      git co-evg-base --run-task replica_sets --build-variant enterprise-rhel-80-64-bit --build-variant enterprise-windows
 
   Starting a new change, to ensure that there are no systemic failures on the base commit:
 
@@ -135,7 +136,9 @@ Options:
                                   times).
   --run-threshold FLOAT           Specify the percentage of tasks that need to be run.
   --pass-threshold FLOAT          Specify the percentage of tasks that need to be successful.
-  --evg-config-file PATH          File containing evergreen authentication information [default=~/.evergreen.yml].
+  --fail-threshold FLOAT          Specify the percentage of tasks that need to be failed.
+  --evg-config-file PATH          File containing evergreen authentication information
+                                  [default=~/.evergreen.yml].
   --evg-project TEXT              Evergreen project to query against [default=mongodb-mongo-
                                   master].
   --build-variant TEXT            Regex of Build variants to check (can be specified multiple
