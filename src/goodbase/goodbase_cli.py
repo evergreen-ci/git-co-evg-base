@@ -270,7 +270,7 @@ def configure_logging(verbose: bool) -> None:
 @click.option(
     "--build-variant",
     multiple=True,
-    help="Regex of Build variants to check (can be specified multiple times) [default=.*-required$].",
+    help="Regex of Build variants to check (can be specified multiple times) [default=.*].",
 )
 @click.option(
     "--commit-lookback",
@@ -367,7 +367,7 @@ def main(
     the other 4 above options will be null.
 
     Additionally, you can specify which build variants the criteria should be checked against. By
-    default, only builds that end in 'required' will be checked.
+    default, all build variants will be checked.
 
     Notes
 
@@ -404,7 +404,7 @@ def main(
         output_format=output_format,
     )
 
-    build_variant_checks = [".*-required$"]
+    build_variant_checks = [".*"]
 
     if build_variant:
         build_variant_checks = build_variant

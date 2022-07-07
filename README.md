@@ -110,7 +110,7 @@ Usage: git-co-evg-base [OPTIONS]
   options will be null.
 
   Additionally, you can specify which build variants the criteria should be checked against. By
-  default, only builds that end in 'required' will be checked.
+  default, all build variants will be checked.
 
   Notes
 

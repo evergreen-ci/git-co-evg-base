@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0 - 2022-07-06
+- Change default value for build variant to all.
+
 ## 2.1.0 - 2022-06-30
 - Add failure threshold criteria.
 
