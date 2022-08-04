@@ -231,6 +231,39 @@ class TestCheckVersion:
 
         assert result
 
+    def test_all_build_meet_checks_with_failure_threshold(self, evg_service):
+        n_builds = 20
+        mock_build_map = {
+            f"build_{i}": [build_mock_task(f"task_{j}", TaskStatus.FAILED) for j in range(10)]
+            for i in range(n_builds)
+        }
+        mock_task_list_for_build(evg_service, mock_build_map)
+        mock_version = build_mock_version([build_name for build_name in mock_build_map.keys()])
+        build_checks = BuildChecks(
+            build_variant_regex=[".*"], run_threshold=0.9, failure_threshold=0.1
+        )
+
+        result = evg_service.check_version(mock_version, [build_checks])
+
+        assert result
+
+    def test_one_build_meet_checks_with_failure_threshold(self, evg_service):
+        n_builds = 20
+        mock_build_map = {
+            f"build_{i}": [build_mock_task(f"task_{j}", TaskStatus.SUCCESS) for j in range(10)]
+            for i in range(n_builds)
+        }
+        mock_build_map["matching_build"] = [build_mock_task("task_1", TaskStatus.FAILED)]
+        mock_task_list_for_build(evg_service, mock_build_map)
+        mock_version = build_mock_version([build_name for build_name in mock_build_map.keys()])
+        build_checks = BuildChecks(
+            build_variant_regex=[".*"], run_threshold=0.9, failure_threshold=0.1
+        )
+
+        result = evg_service.check_version(mock_version, [build_checks])
+
+        assert result
+
     def test_some_build_meet_checks(self, evg_service):
         n_builds = 20
         mock_build_map = {

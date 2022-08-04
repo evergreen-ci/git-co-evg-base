@@ -477,6 +477,14 @@ def main(
 
         LOGGER.debug("criteria", criteria=build_checks)
 
+        success_criteria = [c for c in criteria if c.success_threshold is not None]
+        failure_criteria = [f for f in criteria if f.failure_threshold is not None]
+        if len(success_criteria) >= 1 and len(failure_criteria) >= 1:
+            click.echo(
+                click.style("Only one of pass threshold and fail threshold can be set", fg="red")
+            )
+            return
+
         revision = orchestrator.checkout_good_base(evg_project, criteria)
 
         if revision:

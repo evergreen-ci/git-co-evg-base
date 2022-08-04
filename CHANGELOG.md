@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.1 - 2022-08-04
+- `Failure threshold` checks are now `or`'d together, instead of `and`'d.
+
 ## 3.0.0 - 2022-07-06
 - Change default value for build variant to all.
 
