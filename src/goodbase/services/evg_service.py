@@ -59,7 +59,21 @@ class EvergreenService:
         :return: True if the version matches the specified criteria.
         """
         build_status_list = self.get_build_statuses_for_version(evg_version, build_checks)
-        return all(bc.check(bs) for bs in build_status_list for bc in build_checks)
+        checks_without_failure_threshold = [
+            bc for bc in build_checks if bc.failure_threshold is None
+        ]
+        success_check = all(
+            bc.check(bs) for bs in build_status_list for bc in checks_without_failure_threshold
+        )
+
+        checks_with_failure_thresholds = [
+            bc for bc in build_checks if bc.failure_threshold is not None
+        ]
+        failure_check = any(
+            bc.check(bs) for bs in build_status_list for bc in checks_with_failure_thresholds
+        )
+
+        return success_check and (len(checks_with_failure_thresholds) == 0 or failure_check)
 
     def get_build_statuses_for_version(
         self, evg_version: Version, build_checks: List[BuildChecks]
