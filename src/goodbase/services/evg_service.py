@@ -1,9 +1,10 @@
 """Service to interact with evergreen."""
 from concurrent.futures import ThreadPoolExecutor as Executor
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import inject
+import structlog
 import yaml
 from evergreen import EvergreenApi, Version
 from requests.exceptions import HTTPError
@@ -13,6 +14,8 @@ from goodbase.clients.evg_cli_proxy import EvgCliProxy
 from goodbase.models.build_status import BuildStatus
 
 N_THREADS = 16
+
+LOGGER = structlog.get_logger(__name__)
 
 
 class EvergreenService:
@@ -59,6 +62,9 @@ class EvergreenService:
         :return: True if the version matches the specified criteria.
         """
         build_status_list = self.get_build_statuses_for_version(evg_version, build_checks)
+        if not build_status_list:
+            LOGGER.debug("No build status found for version, skipping", commit=evg_version.revision)
+            return False
         checks_without_failure_threshold = [
             bc for bc in build_checks if bc.failure_threshold is None
         ]
@@ -77,7 +83,7 @@ class EvergreenService:
 
     def get_build_statuses_for_version(
         self, evg_version: Version, build_checks: List[BuildChecks]
-    ) -> List[BuildStatus]:
+    ) -> Optional[List[BuildStatus]]:
         """
         Get the build status for this version that match the predicate.
 
@@ -85,6 +91,8 @@ class EvergreenService:
         :param build_checks: Build criteria to use.
         :return: List of build statuses.
         """
+        if not evg_version.build_variants_status or len(evg_version.build_variants_status) == 0:
+            return None
         with Executor(max_workers=N_THREADS) as exe:
             jobs = [
                 exe.submit(self.analyze_build, build_id)
