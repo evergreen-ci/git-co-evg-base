@@ -39,6 +39,7 @@ def build_mock_build(name: str, task_list: List[Task]) -> Build:
 
 def build_mock_version(build_names: List[str]) -> Version:
     mock_version = MagicMock(spec=Version)
+    mock_version.build_variants_status = build_names
     mock_version.build_variants_map = {build_name: build_name for build_name in build_names}
     return mock_version
 
@@ -200,6 +201,22 @@ class TestGetBuildStatusesForVersion:
         build_status_list = evg_service.get_build_statuses_for_version(mock_version, build_checks)
 
         assert len(build_status_list) == 11
+
+    @pytest.mark.parametrize(
+        "builds",
+        [
+            ([]),
+            (None),
+        ],
+    )
+    def test_version_with_no_build_statuses(self, evg_service, builds):
+        build_checks = [BuildChecks(build_variant_regex=["^build_1"])]
+        mock_version = MagicMock(spec=Version)
+        mock_version.build_variants_map = builds
+
+        build_status_list = evg_service.get_build_statuses_for_version(mock_version, build_checks)
+
+        assert build_status_list is None
 
 
 class TestCheckVersion:

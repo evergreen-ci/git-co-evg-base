@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.2 - 2022-08-08
+- Gracefully handle the case when a version has no build statues.
+
 ## 3.0.1 - 2022-08-04
 - `Failure threshold` checks are now `or`'d together, instead of `and`'d.
 
