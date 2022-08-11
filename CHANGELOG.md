@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.3 - 2022-08-11
+- Handle the case when a build has no tasks.
+
 ## 3.0.2 - 2022-08-08
 - Gracefully handle the case when a version has no build statues.
 
