@@ -32,15 +32,25 @@ class EvergreenService:
         self.evg_api = evg_api
         self.evg_cli_proxy = evg_cli_proxy
 
-    def analyze_build(self, build_id: str) -> BuildStatus:
+    def analyze_build(self, build_id: str) -> Optional[BuildStatus]:
         """
         Get a summary of results for the given build.
 
         :param build_id: ID of build to analyze.
         :return: Summary of build.
         """
-        build = self.evg_api.build_by_id(build_id)
-        tasks = build.get_tasks()
+        try:
+            build = self.evg_api.build_by_id(build_id)
+            tasks = build.get_tasks()
+        except HTTPError as err:
+            LOGGER.debug(
+                "Could not get data from Evergreen for a build",
+                status_code=err.response.status_code,
+                build_id=build_id,
+                exc_info=True,
+            )
+            return None
+
         successful_tasks = {task.display_name for task in tasks if task.is_success()}
         inactive_tasks = {task.display_name for task in tasks if task.is_undispatched()}
         all_tasks = {task.display_name for task in tasks}
@@ -100,7 +110,12 @@ class EvergreenService:
                 if any(bc.should_apply(bv) for bc in build_checks)
             ]
 
-        return [j.result() for j in jobs]
+        results = []
+        for j in jobs:
+            result = j.result()
+            if result is not None:
+                results.append(result)
+        return results
 
     def get_modules_revisions(self, project_id: str, revision: str) -> Dict[str, str]:
         """
