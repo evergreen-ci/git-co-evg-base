@@ -144,6 +144,11 @@ For example, to create a branch named `my-branch`, use the following:
 ```bash
 git co-evg-base --git-operation checkout --branch my-branch
 ```
+The same result can be achieved by using the `-b` or `--branch` option without `--git-operation`, in this 
+case, since the branch name is specified, git operation is set to **checkout** by default:
+```bash
+git co-evg-base --branch my-branch
+```
 
 Regardless of the git operation specified, the found revision will always be displayed to the
 screen for reference.
@@ -154,6 +159,12 @@ Find and print a revision that meets the criteria, but perform no actions on the
 
 ```bash
 git co-evg-base --pass-threshold 0.85 --git-operation none
+```
+Git operation is by default **none**. In some cases git operation may be set to other action than **none**, 
+for instance when using `--branch` it is set to **checkout** by default. Unless you have to override those, 
+you can omit the `--git-operation none` part. The same result as above can be achieved by using this: 
+```bash
+git co-evg-base --pass-threshold 0.85
 ```
 
 To rebase my active branch on the most recent commit that meets the threshold:
