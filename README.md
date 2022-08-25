@@ -77,7 +77,7 @@ $ python --version
 ```
 
 If you are running into the issue above but are sure that the correct version of Python is installed on your computer,
-you can explicitly specify a path to the correct Python installation during installation.
+you can explicitly specify a path to the correct Python version during installation.
 
 ```bash
 $ which python3.9
