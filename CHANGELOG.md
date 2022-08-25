@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.4 - 2022-08-25
+- Document how to install with a specific Python version.
+
 ## 3.0.3 - 2022-08-11
 - Handle the case when a build has no tasks.
 
