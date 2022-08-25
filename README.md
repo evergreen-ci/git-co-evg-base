@@ -76,6 +76,15 @@ can check the version of Python that is on your computer by running
 $ python --version
 ```
 
+If you are running into the issue above but are sure that the correct version of Python is installed on your computer,
+you can explicitly specify a path to the correct Python installation during installation.
+
+```bash
+$ which python3.9
+/usr/bin/python3.9
+$ pipx install git-co-evg-base --python /usr/bin/python3.9
+```
+
 ## Usage
 
 Detailed usage documentation can be found [here](https://github.com/evergreen-ci/git-co-evg-base/tree/main/docs/usage.md).
