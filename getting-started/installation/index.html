@@ -42,7 +42,7 @@ $ pipx install git-co-evg-base Debugging installation issues     A common issue 
 <meta property="article:section" content="Getting Started" />
     <meta
       property="article:modified_time"
-      content="2022-04-13T11:13:26-04:00"
+      content="2022-08-26T11:46:30-04:00"
     />
 
 
@@ -72,7 +72,7 @@ $ pipx install git-co-evg-base Debugging installation issues     A common issue 
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-04-13T11:13:26.00Z",
+      "dateModified": "2022-08-26T11:46:30.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Git Checkout Evergreen Base Documentation",
@@ -85,7 +85,7 @@ $ pipx install git-co-evg-base Debugging installation issues     A common issue 
           }
       },
       "url" : "https:\/\/evergreen-ci.github.io\/git-co-evg-base\/getting-started\/installation\/",
-      "wordCount" : "191",
+      "wordCount" : "236",
   }
   </script>
 
@@ -1062,6 +1062,11 @@ Make sure to check that your version of Python matches the requirements called o
 >Dependencies</a> section. You
 can check the version of Python that is on your computer by running</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ python --version
+</code></pre></div><p>If you are running into the issue above but are sure that the correct version of Python is installed on your computer,
+you can explicitly specify a path to the correct Python version during installation.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ which python3.9
+/usr/bin/python3.9
+$ pipx install git-co-evg-base --python /usr/bin/python3.9
 </code></pre></div>
   </article>
 
