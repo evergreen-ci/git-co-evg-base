@@ -402,14 +402,19 @@ def main(
         if git_operation == GitAction.NONE:
             git_operation = GitAction.CHECKOUT
             LOGGER.debug(
-                "Branch name received and no git-operation specified, setting git-operation to checkout",
+                "Branch name received and no git-operation specified, setting git-operation to CHECKOUT",
                 git_operation=git_operation,
                 branch=branch,
             )
         elif git_operation != GitAction.CHECKOUT:
-            raise ValueError(
-                f"-b or --branch option can only be used with CHECKOUT git-operation, but {git_operation} was given"
+            click.echo(
+                click.style(
+                    f"-b or --branch option can only be used with CHECKOUT git-operation, "
+                    f"but {git_operation} was given",
+                    fg="red",
+                )
             )
+            sys.exit(1)
 
     options = GoodBaseOptions(
         max_lookback=commit_lookback,
