@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.5 - 2022-08-29
+- Perform `checkout` by default when branch name is specified.
+
 ## 3.0.4 - 2022-08-25
 - Document how to install with a specific Python version.
 

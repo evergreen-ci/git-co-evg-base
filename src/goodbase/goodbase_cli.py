@@ -290,7 +290,11 @@ def configure_logging(verbose: bool) -> None:
     default=GitAction.NONE,
     help="Git operations to perform with found commit [default=none].",
 )
-@click.option("-b", "--branch", help="Name of branch to create on checkout.")
+@click.option(
+    "-b",
+    "--branch",
+    help="Name of branch to create on checkout. When specified, git-operation is set to checkout by default.",
+)
 @click.option(
     "--save-criteria",
     type=str,
@@ -393,6 +397,24 @@ def main(
 
     evg_config_file = os.path.expanduser(evg_config_file)
     evg_api = RetryingEvergreenApi.get_api(config_file=evg_config_file)
+
+    if branch:
+        if git_operation == GitAction.NONE:
+            git_operation = GitAction.CHECKOUT
+            LOGGER.debug(
+                "Branch name received and no git-operation specified, setting git-operation to CHECKOUT",
+                git_operation=git_operation,
+                branch=branch,
+            )
+        elif git_operation != GitAction.CHECKOUT:
+            click.echo(
+                click.style(
+                    f"-b or --branch option can only be used with CHECKOUT git-operation, "
+                    f"but {git_operation} was given",
+                    fg="red",
+                )
+            )
+            sys.exit(1)
 
     options = GoodBaseOptions(
         max_lookback=commit_lookback,
