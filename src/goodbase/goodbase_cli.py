@@ -2,6 +2,7 @@
 import json
 import logging
 import os.path
+import re
 import sys
 from pathlib import Path
 from typing import Dict, List, NamedTuple, Optional
@@ -36,6 +37,7 @@ EXTERNAL_LOGGERS = [
     "inject",
     "urllib3",
 ]
+PROJECT_REGEX_TO_DEFAULT_BUILD_VARIANTS = {"mongodb-mongo-.*": [".*-required$"]}
 
 
 class RevisionInformation(NamedTuple):
@@ -430,6 +432,19 @@ def main(
 
     if build_variant:
         build_variant_checks = build_variant
+    else:
+        for (
+            project_regex,
+            default_build_variants,
+        ) in PROJECT_REGEX_TO_DEFAULT_BUILD_VARIANTS.items():
+            if re.match(project_regex, evg_project):
+                LOGGER.debug(
+                    "Found default build variants for evg project",
+                    evg_project=project_regex,
+                    default_build_variants=default_build_variants,
+                )
+                build_variant_checks = default_build_variants
+                break
 
     build_checks = BuildChecks(build_variant_regex=build_variant_checks)
     if pass_threshold is not None:

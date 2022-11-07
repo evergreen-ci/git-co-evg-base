@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.6 - 2022-11-07
+- Change default build variants to required for mongo projects.
+
 ## 3.0.5 - 2022-08-29
 - Perform `checkout` by default when branch name is specified.
 
