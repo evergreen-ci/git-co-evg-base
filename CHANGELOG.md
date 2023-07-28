@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.0 - 2023-07-28
+- Add `--display-variant-name` optional argument.
+
 ## 3.0.6 - 2022-11-07
 - Change default build variants to required for mongo projects.
 

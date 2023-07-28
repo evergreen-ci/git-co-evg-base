@@ -27,10 +27,16 @@ class CriteriaGroup(BaseModel):
         :param override: Overwrite checks if they already exist.
         """
         existing_rules = [
-            bc for bc in self.rules if bc.build_variant_regex == build_checks.build_variant_regex
+            bc
+            for bc in self.rules
+            if bc.build_variant_regex == build_checks.build_variant_regex
+            and bc.display_name_regex == build_checks.display_name_regex
         ]
         other_rules = [
-            bc for bc in self.rules if bc.build_variant_regex != build_checks.build_variant_regex
+            bc
+            for bc in self.rules
+            if bc.build_variant_regex != build_checks.build_variant_regex
+            or bc.display_name_regex != build_checks.display_name_regex
         ]
         if existing_rules and not override:
             raise ValueError("Rule already exists, use `--override` to override it.")

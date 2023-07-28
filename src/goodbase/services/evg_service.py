@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import inject
 import structlog
 import yaml
-from evergreen import EvergreenApi, Version
+from evergreen import Build, EvergreenApi, Version
 from requests.exceptions import HTTPError
 
 from goodbase.build_checker import BuildChecks
@@ -32,21 +32,21 @@ class EvergreenService:
         self.evg_api = evg_api
         self.evg_cli_proxy = evg_cli_proxy
 
-    def analyze_build(self, build_id: str) -> Optional[BuildStatus]:
+    @staticmethod
+    def analyze_build(build: Build) -> Optional[BuildStatus]:
         """
         Get a summary of results for the given build.
 
-        :param build_id: ID of build to analyze.
+        :param build: Evergreen build to analyze.
         :return: Summary of build.
         """
         try:
-            build = self.evg_api.build_by_id(build_id)
             tasks = build.get_tasks()
         except HTTPError as err:
             LOGGER.debug(
                 "Could not get data from Evergreen for a build",
                 status_code=err.response.status_code,
-                build_id=build_id,
+                build_id=build.id,
                 exc_info=True,
             )
             return None
@@ -103,11 +103,14 @@ class EvergreenService:
         """
         if not evg_version.build_variants_status or len(evg_version.build_variants_status) == 0:
             return None
+        builds = evg_version.get_builds()
         with Executor(max_workers=N_THREADS) as exe:
             jobs = [
-                exe.submit(self.analyze_build, build_id)
-                for bv, build_id in evg_version.build_variants_map.items()
-                if any(bc.should_apply(bv) for bc in build_checks)
+                exe.submit(self.analyze_build, build)
+                for build in builds
+                if any(
+                    bc.should_apply(build.build_variant, build.display_name) for bc in build_checks
+                )
             ]
 
         results = []

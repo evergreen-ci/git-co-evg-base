@@ -87,8 +87,10 @@ class TestLookupCriteria:
 
 def build_mock_group(name):
     build_checks = [
-        BuildChecks(build_variant_regex=["bv"], success_threshold=0.97),
-        BuildChecks(build_variant_regex=["bv"], active_tasks={"task0", "task1"}),
+        BuildChecks(build_variant_regex=["bv"], display_name_regex=["dn"], success_threshold=0.97),
+        BuildChecks(
+            build_variant_regex=["bv"], display_name_regex=["dn"], active_tasks={"task0", "task1"}
+        ),
     ]
     return CriteriaGroup(name=name, rules=build_checks)
 
