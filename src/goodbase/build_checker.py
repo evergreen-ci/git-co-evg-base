@@ -15,6 +15,7 @@ class BuildChecks(BaseModel):
     Set of checks to perform to check build criteria.
 
     build_variant_regex: List of build variant regexes to which checks should apply.
+    display_name_regex: List of build variant display name regexes to which checks should apply.
     success_threshold: Percentage of tasks that need to pass to use the build.
     failure_threshold: Percentage of tasks that need to fail to use the build.
     run_threshold: Percentage of tasks that need to have run to use the build.
@@ -23,20 +24,24 @@ class BuildChecks(BaseModel):
     """
 
     build_variant_regex: List[str]
+    display_name_regex: List[str]
     success_threshold: Optional[float] = None
     failure_threshold: Optional[float] = None
     run_threshold: Optional[float] = None
     successful_tasks: Optional[Set[str]] = None
     active_tasks: Optional[Set[str]] = None
 
-    def should_apply(self, build_variant: str) -> bool:
+    def should_apply(self, build_variant: str, display_name: str) -> bool:
         """
         Check if the given build variant should apply to these checks.
 
         :param build_variant: Name of build variant to check.
+        :param display_name: Display name of build variant to check.
         :return: True if these checks apply to the given build variant.
         """
-        return any(re.match(bv_regex, build_variant) for bv_regex in self.build_variant_regex)
+        return any(
+            re.match(bv_regex, build_variant) for bv_regex in self.build_variant_regex
+        ) or any(re.match(dn_regex, display_name) for dn_regex in self.display_name_regex)
 
     def check(self, build_status: BuildStatus) -> bool:
         """
@@ -45,7 +50,7 @@ class BuildChecks(BaseModel):
         :param build_status: Status of build to check.
         :return: True if the build matches the criteria.
         """
-        if not self.should_apply(build_status.build_variant):
+        if not self.should_apply(build_status.build_variant, build_status.build_name):
             return True
 
         if self.success_threshold and build_status.success_pct() < self.success_threshold:

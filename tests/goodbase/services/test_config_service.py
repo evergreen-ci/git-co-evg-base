@@ -25,6 +25,7 @@ class TestAddBuildChecks:
         group = under_test.CriteriaGroup(name="my group", rules=[])
         build_check = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             success_threshold=0.95,
         )
 
@@ -39,16 +40,19 @@ class TestAddBuildChecks:
             rules=[
                 BuildChecks(
                     build_variant_regex=[".*-required"],
+                    display_name_regex=["^! .*"],
                     run_threshold=0.85,
                 ),
                 BuildChecks(
                     build_variant_regex=[".*-suggested"],
+                    display_name_regex=["^\\* .*"],
                     active_tasks={"compile_dist_test"},
                 ),
             ],
         )
         build_check = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             success_threshold=0.95,
         )
 
@@ -63,16 +67,19 @@ class TestAddBuildChecks:
             rules=[
                 BuildChecks(
                     build_variant_regex=[".*-required"],
+                    display_name_regex=["^! .*"],
                     run_threshold=0.85,
                 ),
                 BuildChecks(
                     build_variant_regex=[".*"],
+                    display_name_regex=[".*"],
                     active_tasks={"compile_dist_test"},
                 ),
             ],
         )
         build_check = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             success_threshold=0.95,
         )
 
@@ -85,16 +92,19 @@ class TestAddBuildChecks:
             rules=[
                 BuildChecks(
                     build_variant_regex=[".*-required"],
+                    display_name_regex=["^! .*"],
                     run_threshold=0.85,
                 ),
                 BuildChecks(
                     build_variant_regex=[".*"],
+                    display_name_regex=[".*"],
                     active_tasks={"compile_dist_test"},
                 ),
             ],
         )
         build_check = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             success_threshold=0.95,
         )
 
@@ -119,10 +129,12 @@ class TestGetCriteriaGroup:
             rules=[
                 BuildChecks(
                     build_variant_regex=[".*-required"],
+                    display_name_regex=["^! .*"],
                     run_threshold=0.85,
                 ),
                 BuildChecks(
                     build_variant_regex=[".*"],
+                    display_name_regex=[".*"],
                     active_tasks={"compile_dist_test"},
                 ),
             ],
@@ -140,10 +152,12 @@ class TestGetCriteriaGroup:
             rules=[
                 BuildChecks(
                     build_variant_regex=[".*-required"],
+                    display_name_regex=["^! .*"],
                     run_threshold=0.85,
                 ),
                 BuildChecks(
                     build_variant_regex=[".*"],
+                    display_name_regex=[".*"],
                     active_tasks={"compile_dist_test"},
                 ),
             ],
@@ -160,6 +174,7 @@ class TestAddCriteria:
         config = under_test.CriteriaConfiguration.new()
         build_checks = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             run_threshold=0.9,
         )
 
@@ -177,6 +192,7 @@ class TestAddCriteria:
                     rules=[
                         BuildChecks(
                             build_variant_regex=[".*-required"],
+                            display_name_regex=["^! .*"],
                             success_threshold=0.85,
                         ),
                     ],
@@ -185,6 +201,7 @@ class TestAddCriteria:
         )
         build_checks = BuildChecks(
             build_variant_regex=[".*"],
+            display_name_regex=[".*"],
             run_threshold=0.9,
         )
 
@@ -203,6 +220,7 @@ class TestAddCriteria:
                     rules=[
                         BuildChecks(
                             build_variant_regex=[".*-required"],
+                            display_name_regex=["^! .*"],
                             success_threshold=0.85,
                         ),
                     ],
@@ -211,6 +229,7 @@ class TestAddCriteria:
         )
         build_checks = BuildChecks(
             build_variant_regex=[".*-required"],
+            display_name_regex=["^! .*"],
             run_threshold=0.9,
         )
 
@@ -230,6 +249,7 @@ class TestAddCriteria:
                     rules=[
                         BuildChecks(
                             build_variant_regex=[".*-required"],
+                            display_name_regex=["^! .*"],
                             success_threshold=0.85,
                         ),
                     ],
@@ -238,6 +258,7 @@ class TestAddCriteria:
         )
         build_checks = BuildChecks(
             build_variant_regex=[".*-required"],
+            display_name_regex=["^! .*"],
             run_threshold=0.9,
         )
 
@@ -267,6 +288,7 @@ class TestGetConfig:
                     rules=[
                         BuildChecks(
                             build_variant_regex=[".*-required"],
+                            display_name_regex=["^! .*"],
                             success_threshold=0.85,
                         ),
                     ],

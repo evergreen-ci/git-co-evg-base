@@ -4,18 +4,23 @@ weight: 2
 ## Applying checks to build variants
 
 In projects with multiple build variants, you may not desire to apply the criteria to every build
-variant. The `--build-variant` option allows you to control which build variants the checks should
-apply. The option takes a regular expression as an argument. Any build variants that match against
-the regular express will have their criteria checked. 
+variant. The `--display-variant-name` and/or `--build-variant` options allow you to control which
+build variants the checks should apply. Options take a regular expressions as an argument. Any build
+variants that match against the regular express will have their criteria checked.
 
-The `--build-variant` option can be specified multiple times to provide multiple regular expression
-to check against.
+The `--display-variant-name` and/or `--build-variant` option can be specified multiple times to
+provide multiple regular expression to check against.
 
-For example, to check that a task was successful on builds that end with "-required" and "-suggested", 
-I would run the following:
+For example, to check that a task was successful on builds that end with "-required" and "-suggested"
+and which display names start with "! " and "* ", I would run the following:
 
 ```bash
-git co-evg-base --passing-task compile_dist_test --build-variant ".*-required" --build-variant ".*-suggested"
+git co-evg-base \
+  --passing-task compile_dist_test \
+  --display-variant-name "^! .*" \
+  --display-variant-name "^\* .*" \
+  --build-variant ".*-required$" \
+  --build-variant ".*-suggested$"
 ```
 
 ## Specifying the Evergreen project

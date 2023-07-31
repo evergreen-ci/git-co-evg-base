@@ -11,6 +11,7 @@ import click
 import inject
 import structlog
 import yaml
+from click.core import ParameterSource
 from evergreen import EvergreenApi, RetryingEvergreenApi
 from plumbum import ProcessExecutionError
 from rich.console import Console
@@ -37,7 +38,7 @@ EXTERNAL_LOGGERS = [
     "inject",
     "urllib3",
 ]
-PROJECT_REGEX_TO_DEFAULT_BUILD_VARIANTS = {"mongodb-mongo-.*": [".*-required$"]}
+PROJECT_REGEX_TO_DEFAULT_DISPLAY_VARIANT_NAME_REGEXES = {"mongodb-mongo-.*": ["^! .*"]}
 
 
 class RevisionInformation(NamedTuple):
@@ -198,6 +199,7 @@ class GoodBaseOrchestrator:
         for group in self.criteria_service.get_all_criteria():
             table = Table(title=group.name, show_lines=True)
             table.add_column("Build Variant Regexes")
+            table.add_column("Display Name Regexes")
             table.add_column("Success %")
             table.add_column("Run %")
             table.add_column("Successful Tasks")
@@ -206,6 +208,7 @@ class GoodBaseOrchestrator:
             for rule in group.rules:
                 table.add_row(
                     "\n".join(rule.build_variant_regex),
+                    "\n".join(rule.display_name_regex),
                     f"{rule.success_threshold}" if rule.success_threshold else "",
                     f"{rule.run_threshold}" if rule.run_threshold else "",
                     "\n".join(rule.successful_tasks) if rule.successful_tasks else "",
@@ -232,7 +235,8 @@ def configure_logging(verbose: bool) -> None:
         logging.getLogger(log_name).setLevel(logging.WARNING)
 
 
-@click.command(context_settings=dict(max_content_width=100))
+@click.command(context_settings=dict(max_content_width=100, show_default=True))
+@click.pass_context
 @click.option(
     "--passing-task",
     type=str,
@@ -262,23 +266,29 @@ def configure_logging(verbose: bool) -> None:
     "--evg-config-file",
     default=DEFAULT_EVG_CONFIG,
     type=click.Path(exists=True),
-    help=f"File containing evergreen authentication information [default={DEFAULT_EVG_CONFIG}].",
+    help="File containing evergreen authentication information.",
 )
 @click.option(
     "--evg-project",
     default=DEFAULT_EVG_PROJECT,
-    help=f"Evergreen project to query against [default={DEFAULT_EVG_PROJECT}].",
+    help="Evergreen project to query against.",
 )
 @click.option(
     "--build-variant",
     multiple=True,
-    help="Regex of Build variants to check (can be specified multiple times) [default=.*].",
+    help="Regex of Build variants to check (can be specified multiple times).",
+)
+@click.option(
+    "--display-variant-name",
+    default=[".*"],
+    multiple=True,
+    help="Regex of Build variant display names to check (can be specified multiple times).",
 )
 @click.option(
     "--commit-lookback",
     type=int,
     default=MAX_LOOKBACK,
-    help=f"Number of commits to check before giving up [default={MAX_LOOKBACK}].",
+    help="Number of commits to check before giving up.",
 )
 @click.option("--timeout-secs", type=int, help="Number of seconds to search for before giving up.")
 @click.option(
@@ -289,8 +299,8 @@ def configure_logging(verbose: bool) -> None:
 @click.option(
     "--git-operation",
     type=click.Choice([a.value for a in GitAction]),
-    default=GitAction.NONE,
-    help="Git operations to perform with found commit [default=none].",
+    default=GitAction.NONE.value,
+    help="Git operations to perform with found commit.",
 )
 @click.option(
     "-b",
@@ -320,11 +330,12 @@ def configure_logging(verbose: bool) -> None:
 @click.option(
     "--output-format",
     type=click.Choice([f.value for f in OutputFormat]),
-    default=OutputFormat.PLAINTEXT,
-    help="Format of the command output [default=plaintext].",
+    default=OutputFormat.PLAINTEXT.value,
+    help="Format of the command output.",
 )
 @click.option("--verbose", is_flag=True, default=False, help="Enable debug logging.")
 def main(
+    ctx: click.Context,
     passing_task: List[str],
     run_task: List[str],
     run_threshold: float,
@@ -333,6 +344,7 @@ def main(
     evg_config_file: str,
     evg_project: str,
     build_variant: List[str],
+    display_variant_name: List[str],
     commit_lookback: int,
     commit_limit: Optional[str],
     timeout_secs: Optional[int],
@@ -383,11 +395,12 @@ def main(
 
     Examples
 
-    Working on a fix for a task 'replica_sets' on the build variants 'enterprise-rhel-80-64-bit' and
-    'enterprise-windows', to ensure the task has been run on those build variants:
+    Working on a fix for a task 'replica_sets_jscore_passthrough' on the build variants
+    '! Amazon Linux 2 arm64 (all feature flags)' and '! Enterprise Windows (all feature flags)',
+    to ensure the task has been run on those build variants:
 
       \b
-      git co-evg-base --run-task replica_sets --build-variant enterprise-rhel-80-64-bit --build-variant enterprise-windows
+      git co-evg-base --run-task replica_sets_jscore_passthrough --display-variant-name "^! Amazon Linux 2 arm64 (all feature flags)$" --display-variant-name "^! Enterprise Windows (all feature flags)$"
 
     Starting a new change, to ensure that there are no systemic failures on the base commit:
 
@@ -428,25 +441,25 @@ def main(
         output_format=output_format,
     )
 
-    build_variant_checks = [".*"]
+    display_variant_name_checks = display_variant_name
 
-    if build_variant:
-        build_variant_checks = build_variant
-    else:
+    if ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT:
         for (
             project_regex,
-            default_build_variants,
-        ) in PROJECT_REGEX_TO_DEFAULT_BUILD_VARIANTS.items():
+            default_display_variant_name_regexes,
+        ) in PROJECT_REGEX_TO_DEFAULT_DISPLAY_VARIANT_NAME_REGEXES.items():
             if re.match(project_regex, evg_project):
                 LOGGER.debug(
-                    "Found default build variants for evg project",
-                    evg_project=project_regex,
-                    default_build_variants=default_build_variants,
+                    "Found default build variant display name regexes for evg project",
+                    evg_project_regex=project_regex,
+                    default_display_variant_name_regexes=default_display_variant_name_regexes,
                 )
-                build_variant_checks = default_build_variants
+                display_variant_name_checks = default_display_variant_name_regexes
                 break
 
-    build_checks = BuildChecks(build_variant_regex=build_variant_checks)
+    build_checks = BuildChecks(
+        build_variant_regex=build_variant, display_name_regex=display_variant_name_checks
+    )
     if pass_threshold is not None:
         build_checks.success_threshold = pass_threshold
 

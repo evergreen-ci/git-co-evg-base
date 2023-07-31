@@ -129,10 +129,11 @@ Usage: git-co-evg-base [OPTIONS]
 
   Examples
 
-  Working on a fix for a task 'replica_sets' on the build variants 'enterprise-rhel-80-64-bit' and
-  'enterprise-windows', to ensure the task has been run on those build variants:
+  Working on a fix for a task 'replica_sets_jscore_passthrough' on the build variants '! Amazon
+  Linux 2 arm64 (all feature flags)' and '! Enterprise Windows (all feature flags)', to ensure the
+  task has been run on those build variants:
 
-      git co-evg-base --run-task replica_sets --build-variant enterprise-rhel-80-64-bit --build-variant enterprise-windows
+      git co-evg-base --run-task replica_sets_jscore_passthrough --display-variant-name "^! Amazon Linux 2 arm64 (all feature flags)$" --display-variant-name "^! Enterprise Windows (all feature flags)$"
 
   Starting a new change, to ensure that there are no systemic failures on the base commit:
 
@@ -146,18 +147,21 @@ Options:
   --run-threshold FLOAT           Specify the percentage of tasks that need to be run.
   --pass-threshold FLOAT          Specify the percentage of tasks that need to be successful.
   --fail-threshold FLOAT          Specify the percentage of tasks that need to be failed.
-  --evg-config-file PATH          File containing evergreen authentication information
-                                  [default=~/.evergreen.yml].
-  --evg-project TEXT              Evergreen project to query against [default=mongodb-mongo-
-                                  master].
+  --evg-config-file PATH          File containing evergreen authentication information.  [default:
+                                  /Users/<username>/.evergreen.yml]
+  --evg-project TEXT              Evergreen project to query against.  [default: mongodb-mongo-
+                                  master]
   --build-variant TEXT            Regex of Build variants to check (can be specified multiple
-                                  times) [default=.*-required$].
-  --commit-lookback INTEGER       Number of commits to check before giving up [default=50].
+                                  times).
+  --display-variant-name TEXT     Regex of Build variant display names to check (can be specified
+                                  multiple times).  [default: .*]
+  --commit-lookback INTEGER       Number of commits to check before giving up.  [default: 50]
   --timeout-secs INTEGER          Number of seconds to search for before giving up.
   --commit-limit TEXT             Oldest commit to check before giving up.
   --git-operation [checkout|rebase|merge|none]
-                                  Git operations to perform with found commit [default=none].
-  -b, --branch TEXT               Name of branch to create on checkout.
+                                  Git operations to perform with found commit.  [default: none]
+  -b, --branch TEXT               Name of branch to create on checkout. When specified, git-
+                                  operation is set to checkout by default.
   --save-criteria TEXT            Save the specified criteria rules under the specified name for
                                   future use.
   --use-criteria TEXT             Use previously save criteria rules.
@@ -167,7 +171,7 @@ Options:
   --export-file PATH              File to write exported rules to.
   --import-criteria PATH          Import previously exported criteria.
   --output-format [plaintext|yaml|json]
-                                  Format of the command output [default=plaintext].
+                                  Format of the command output.  [default: plaintext]
   --verbose                       Enable debug logging.
   --help                          Show this message and exit.
 ```
@@ -178,11 +182,11 @@ Checkout using the default criteria:
 $ git co-evg-base
 ```
 
-Checkout with successful tasks 'auth' and 'auth_audit' on builds 'enterprise-windows' and
-'enterprise-rhel-80-64-bit' and 95% of the tasks are passing.
+Checkout with successful tasks 'auth' and 'auth_audit' on builds '! Enterprise Windows (all feature flags)'
+and '! Amazon Linux 2 arm64 (all feature flags)' and 95% of the tasks are passing.
 
 ```bash
-$ git co-evg-base --passing-task auth --passing-task auth_audit --run-threshold 0.95 --build-variant enterprise-windows --build-variant enterprise-rhel-80-64-bit
+$ git co-evg-base --passing-task auth --passing-task auth_audit --run-threshold 0.95 --display-variant-name "^! Enterprise Windows (all feature flags)$" --display-variant-name "^! Amazon Linux 2 arm64 (all feature flags)$"
 ```
 
 ## Contributor's Guide

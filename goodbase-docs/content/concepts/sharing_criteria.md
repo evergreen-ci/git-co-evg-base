@@ -5,7 +5,7 @@ You can use `--export-criteria` and `--import-criteria` to share criteria rules 
 
 ### Exporting criteria rules
 
-The `--export-criteria` option will export saved criteria to a file that can be shared. It takes 
+The `--export-criteria` option will export saved criteria to a file that can be shared. It takes
 the name of a saved criteria as a argument. The option can be specified multiple times to export
 multiple named criteria. The `--export-file` is required and takes as an argument that specified
 where the exported rules should be written.
@@ -15,7 +15,7 @@ where the exported rules should be written.
 Export the previously defined rules:
 
 ```bash
-git co-evg-base --export-criteria b-grade --export-criteria --export-file criteria.yml
+git co-evg-base --export-criteria b-grade --export-file criteria.yml
 ```
 
 ### Importing criteria from a file
