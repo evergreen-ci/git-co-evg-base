@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.1.0 - 2023-07-28
+## 4.0.0 - 2023-07-31
 - Add `--display-variant-name` optional argument.
 
 ## 3.0.6 - 2022-11-07
