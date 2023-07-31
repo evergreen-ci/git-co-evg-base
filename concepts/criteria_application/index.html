@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.92.1" />
 
 
-  <meta name="description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.
-The --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
+  <meta name="description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.
+The --display-variant-name and/or --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
 
     <title>Criteria Application | Git Checkout Evergreen Base Documentation</title>
 
@@ -32,22 +32,22 @@ The --build-variant option can be specified multiple times to provide multiple r
     
   <meta property="og:title" content="Criteria Application" />
   <meta property="og:site_name" content="Git Checkout Evergreen Base Documentation" />
-  <meta property="og:description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.
-The --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
+  <meta property="og:description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.
+The --display-variant-name and/or --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria_application/" />
 
 <meta property="article:section" content="Concepts" />
     <meta
       property="article:modified_time"
-      content="2022-02-12T14:15:21-05:00"
+      content="2023-07-31T13:09:52+03:00"
     />
 
 
       <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Criteria Application" />
-  <meta name="twitter:description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.
-The --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
+  <meta name="twitter:description" content="Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.
+The --display-variant-name and/or --build-variant option can be specified multiple times to provide multiple regular expression to check against." />
 
 
   <script type="application/ld+json">
@@ -58,7 +58,7 @@ The --build-variant option can be specified multiple times to provide multiple r
       "name": "Criteria Application",
       "headline": "Criteria Application",
       "alternativeHeadline": "",
-      "description": "Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.\nThe --build-variant option can be specified multiple times to provide multiple regular expression to check against.",
+      "description": "Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and\/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.\nThe --display-variant-name and\/or --build-variant option can be specified multiple times to provide multiple regular expression to check against.",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -69,7 +69,7 @@ The --build-variant option can be specified multiple times to provide multiple r
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-02-12T14:15:21.00Z",
+      "dateModified": "2023-07-31T13:09:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Git Checkout Evergreen Base Documentation",
@@ -82,7 +82,7 @@ The --build-variant option can be specified multiple times to provide multiple r
           }
       },
       "url" : "https:\/\/evergreen-ci.github.io\/git-co-evg-base\/concepts\/criteria_application\/",
-      "wordCount" : "145",
+      "wordCount" : "170",
   }
   </script>
 
@@ -992,14 +992,19 @@ The --build-variant option can be specified multiple times to provide multiple r
     </h2>
 </div>
 <p>In projects with multiple build variants, you may not desire to apply the criteria to every build
-variant. The <code>--build-variant</code> option allows you to control which build variants the checks should
-apply. The option takes a regular expression as an argument. Any build variants that match against
-the regular express will have their criteria checked.</p>
-<p>The <code>--build-variant</code> option can be specified multiple times to provide multiple regular expression
-to check against.</p>
-<p>For example, to check that a task was successful on builds that end with &ldquo;-required&rdquo; and &ldquo;-suggested&rdquo;,
-I would run the following:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --passing-task compile_dist_test --build-variant <span class="s2">&#34;.*-required&#34;</span> --build-variant <span class="s2">&#34;.*-suggested&#34;</span>
+variant. The <code>--display-variant-name</code> and/or <code>--build-variant</code> options allow you to control which
+build variants the checks should apply. Options take a regular expressions as an argument. Any build
+variants that match against the regular express will have their criteria checked.</p>
+<p>The <code>--display-variant-name</code> and/or <code>--build-variant</code> option can be specified multiple times to
+provide multiple regular expression to check against.</p>
+<p>For example, to check that a task was successful on builds that end with &ldquo;-required&rdquo; and &ldquo;-suggested&rdquo;
+and which display names start with &ldquo;! &quot; and &ldquo;* &ldquo;, I would run the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base <span class="se">\
+</span><span class="se"></span>  --passing-task compile_dist_test <span class="se">\
+</span><span class="se"></span>  --display-variant-name <span class="s2">&#34;^! .*&#34;</span> <span class="se">\
+</span><span class="se"></span>  --display-variant-name <span class="s2">&#34;^\* .*&#34;</span> <span class="se">\
+</span><span class="se"></span>  --build-variant <span class="s2">&#34;.*-required</span>$<span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>  --build-variant <span class="s2">&#34;.*-suggested</span>$<span class="s2">&#34;</span>
 </code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="specifying-the-evergreen-project">
         Specifying the Evergreen project

@@ -13,8 +13,8 @@
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/</guid>
       <description>git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.
-There are 4 types of criteria that can be specified.
- passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.</description>
+There are 5 types of criteria that can be specified.
+ passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.</description>
     </item>
     
     <item>
@@ -34,8 +34,8 @@ $ pipx install git-co-evg-base Debugging installation issues     A common issue 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria_application/</guid>
-      <description>Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.
-The --build-variant option can be specified multiple times to provide multiple regular expression to check against.</description>
+      <description>Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.
+The --display-variant-name and/or --build-variant option can be specified multiple times to provide multiple regular expression to check against.</description>
     </item>
     
     <item>
@@ -106,7 +106,7 @@ Exporting criteria rules     The --export-criteria option will export saved crit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     3.0.6 - 2022-11-07      Change default build variants to required for mongo projects.  3.0.5 - 2022-08-29      Perform checkout by default when branch name is specified.  3.0.4 - 2022-08-25      Document how to install with a specific Python version.  3.0.3 - 2022-08-11      Handle the case when a build has no tasks.</description>
+      <description>Changelog     4.0.0 - 2023-07-31      Add --display-variant-name optional argument.  3.0.6 - 2022-11-07      Change default build variants to required for mongo projects.  3.0.5 - 2022-08-29      Perform checkout by default when branch name is specified.  3.0.4 - 2022-08-25      Document how to install with a specific Python version.</description>
     </item>
     
   </channel>

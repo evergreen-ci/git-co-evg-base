@@ -9,8 +9,8 @@
 
 
   <meta name="description" content="git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.
-There are 4 types of criteria that can be specified.
- passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
+There are 5 types of criteria that can be specified.
+ passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
 
     <title>Criteria | Git Checkout Evergreen Base Documentation</title>
 
@@ -34,23 +34,23 @@ There are 4 types of criteria that can be specified.
   <meta property="og:title" content="Criteria" />
   <meta property="og:site_name" content="Git Checkout Evergreen Base Documentation" />
   <meta property="og:description" content="git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.
-There are 4 types of criteria that can be specified.
- passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
+There are 5 types of criteria that can be specified.
+ passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/" />
 
 <meta property="article:section" content="Concepts" />
     <meta
       property="article:modified_time"
-      content="2022-02-12T14:15:21-05:00"
+      content="2023-07-31T13:09:52+03:00"
     />
 
 
       <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Criteria" />
   <meta name="twitter:description" content="git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.
-There are 4 types of criteria that can be specified.
- passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
+There are 5 types of criteria that can be specified.
+ passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks." />
 
 
   <script type="application/ld+json">
@@ -61,7 +61,7 @@ There are 4 types of criteria that can be specified.
       "name": "Criteria",
       "headline": "Criteria",
       "alternativeHeadline": "",
-      "description": "git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.\nThere are 4 types of criteria that can be specified.\n passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.",
+      "description": "git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.\nThere are 5 types of criteria that can be specified.\n passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -72,7 +72,7 @@ There are 4 types of criteria that can be specified.
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-02-12T14:15:21.00Z",
+      "dateModified": "2023-07-31T13:09:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Git Checkout Evergreen Base Documentation",
@@ -85,7 +85,7 @@ There are 4 types of criteria that can be specified.
           }
       },
       "url" : "https:\/\/evergreen-ci.github.io\/git-co-evg-base\/concepts\/criteria\/",
-      "wordCount" : "356",
+      "wordCount" : "400",
   }
   </script>
 
@@ -988,11 +988,12 @@ There are 4 types of criteria that can be specified.
     <h1>Criteria</h1>
     <p><code>git-co-evg-base</code> allows you to specify criteria that define what a matching evergreen
 version will look like.</p>
-<p>There are 4 types of criteria that can be specified.</p>
+<p>There are 5 types of criteria that can be specified.</p>
 <ul>
 <li>passing tasks</li>
 <li>run tasks</li>
 <li>pass threshold</li>
+<li>fail threshold</li>
 <li>run threshold</li>
 </ul>
 <div class="gdoc-page__anchorwrap">
@@ -1037,6 +1038,18 @@ consider the revision. This can help minimize the number of unrelated failures t
 in patch builds. This is specified with the <code>--pass-threshold</code> option.</p>
 <p>For example, to ensure that 85% of tasks have passed, I would run the following:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --pass-threshold 0.85
+</code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="fail-threshold">
+        Fail threshold
+        <a data-clipboard-text="https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/#fail-threshold" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Fail threshold" aria-label="Anchor to: Fail threshold" href="#fail-threshold">
+            <svg class="icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Fail threshold is opposite to the pass threshold. This can help to find the build with certain
+amount of failures.</p>
+<p>For example, to ensure that 15% of tasks have been failed, I would run the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --fail-threshold 0.15
 </code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="run-threshold">
         Run threshold

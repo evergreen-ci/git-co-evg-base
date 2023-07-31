@@ -13,8 +13,8 @@
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/</guid>
       <description>git-co-evg-base allows you to specify criteria that define what a matching evergreen version will look like.
-There are 4 types of criteria that can be specified.
- passing tasks run tasks pass threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.</description>
+There are 5 types of criteria that can be specified.
+ passing tasks run tasks pass threshold fail threshold run threshold  Passing tasks     Passing tasks are tasks that must have completed successfully in Evergreen to meet the criteria. They are specified with the --passing-task option. This option can be specified more than once to include multiple tasks.</description>
     </item>
     
     <item>
@@ -23,8 +23,8 @@ There are 4 types of criteria that can be specified.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria_application/</guid>
-      <description>Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --build-variant option allows you to control which build variants the checks should apply. The option takes a regular expression as an argument. Any build variants that match against the regular express will have their criteria checked.
-The --build-variant option can be specified multiple times to provide multiple regular expression to check against.</description>
+      <description>Applying checks to build variants     In projects with multiple build variants, you may not desire to apply the criteria to every build variant. The --display-variant-name and/or --build-variant options allow you to control which build variants the checks should apply. Options take a regular expressions as an argument. Any build variants that match against the regular express will have their criteria checked.
+The --display-variant-name and/or --build-variant option can be specified multiple times to provide multiple regular expression to check against.</description>
     </item>
     
     <item>

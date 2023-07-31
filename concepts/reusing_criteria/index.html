@@ -40,7 +40,7 @@ The --save-criteria option will do this. It takes a name to save the criteria un
 <meta property="article:section" content="Concepts" />
     <meta
       property="article:modified_time"
-      content="2022-02-12T14:15:21-05:00"
+      content="2023-07-31T13:09:52+03:00"
     />
 
 
@@ -69,7 +69,7 @@ The --save-criteria option will do this. It takes a name to save the criteria un
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-02-12T14:15:21.00Z",
+      "dateModified": "2023-07-31T13:09:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Git Checkout Evergreen Base Documentation",
@@ -82,7 +82,7 @@ The --save-criteria option will do this. It takes a name to save the criteria un
           }
       },
       "url" : "https:\/\/evergreen-ci.github.io\/git-co-evg-base\/concepts\/reusing_criteria\/",
-      "wordCount" : "348",
+      "wordCount" : "364",
   }
   </script>
 
@@ -1012,11 +1012,11 @@ different build variants.</p>
     </h4>
 </div>
 <p>Save a &ldquo;b-grade&rdquo; criteria with a pass threshold of 80% on all build variants.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --pass-threshold 0.8 --build-variant <span class="s2">&#34;.*&#34;</span> --save-criteria b-grade
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --pass-threshold 0.8 --display-variant-name <span class="s2">&#34;.*&#34;</span> --save-criteria b-grade
 </code></pre></div><p>Save a required criteria with a pass threshold of 95% on all required build variants and the
-&ldquo;compile_dist_test&rdquo; task passing on the &ldquo;enterprise-macos&rdquo; build variant.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --pass-threshold 0.95 --build-variant <span class="s2">&#34;.*-required&#34;</span> --save-criteria required
-git co-evg-base --passing-task compile_dist_test --build-variant <span class="s2">&#34;^enterprise-macos</span>$<span class="s2">&#34;</span> --save-criteria required
+&ldquo;compile_dist_test&rdquo; task passing on the &ldquo;Enterprise macOS&rdquo; build variant.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --pass-threshold 0.95 --display-variant-name <span class="s2">&#34;^! .*&#34;</span> --save-criteria required
+git co-evg-base --passing-task compile_dist_test --display-variant-name <span class="s2">&#34;^Enterprise macOS</span>$<span class="s2">&#34;</span> --save-criteria required
 </code></pre></div><div class="gdoc-page__anchorwrap">
     <h3 id="using-saved-criteria">
         Using saved criteria
@@ -1056,20 +1056,20 @@ saved criteria.</p>
     </h4>
 </div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git co-evg-base --list-criteria
-                                  b-grade
-┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
-┃ Build Variant Regexes ┃ Success % ┃ Run % ┃ Successful Tasks ┃ Run Tasks ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
-│ .*                    │ 0.8       │       │                  │           │
-└───────────────────────┴───────────┴───────┴──────────────────┴───────────┘
-                                  required
-┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
-┃ Build Variant Regexes ┃ Success % ┃ Run % ┃ Successful Tasks  ┃ Run Tasks ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
-│ .*-required           │ 0.95      │       │                   │           │
-├───────────────────────┼───────────┼───────┼───────────────────┼───────────┤
-│ ^enterprise-macos$    │           │       │ compile_dist_test │           │
-└───────────────────────┴───────────┴───────┴───────────────────┴───────────┘
+                                              b-grade
+┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Build Variant Regexes ┃ Display Name Regexes ┃ Success % ┃ Run % ┃ Successful Tasks ┃ Run Tasks ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│                       │ .*                   │ 0.8       │       │                  │           │
+└───────────────────────┴──────────────────────┴───────────┴───────┴──────────────────┴───────────┘
+                                              required
+┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Build Variant Regexes ┃ Display Name Regexes ┃ Success % ┃ Run % ┃ Successful Tasks  ┃ Run Tasks ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│                       │ ^! .*                │ 0.95      │       │                   │           │
+├───────────────────────┼──────────────────────┼───────────┼───────┼───────────────────┼───────────┤
+│                       │ ^Enterprise macOS$   │           │       │ compile_dist_test │           │
+└───────────────────────┴──────────────────────┴───────────┴───────┴───────────────────┴───────────┘
 </code></pre></div>
   </article>
 
