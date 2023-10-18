@@ -40,16 +40,13 @@ functions:
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
 
+          export PIPX_BIN_DIR="$PWD/pipx/bin"
           if [ "Windows_NT" = "$OS" ]; then
-            dos2unix "venv/Scripts/activate"
-            . "venv/Scripts/activate"
-          else
-            export PYENV_ROOT="$PWD/pyenv"
-            export PATH="$PYENV_ROOT/bin:$PATH"
-            eval "$(pyenv init -)"
-            eval "$(pyenv init --path)"
-            eval "$(pyenv virtualenv-init -)"
+            export PIPX_BIN_DIR=$(cygpath -w "$PIPX_BIN_DIR")
           fi
+          export PATH="$PATH:$PIPX_BIN_DIR"
+
+          poetry install
           poetry run pytest --cov=src --junitxml=junit-test-output.xml
 
   install_poetry:
@@ -62,15 +59,19 @@ functions:
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
 
-          echo $OS
           if [ "Windows_NT" = "$OS" ]; then
+            export PIPX_HOME=$(cygpath -w "$PIPX_HOME")
+            export PIPX_BIN_DIR=$(cygpath -w "$PIPX_BIN_DIR")
+
             PYTHON="/cygdrive/c/python/python${short_python_version}/python.exe"
-            $PYTHON -m venv venv
+            "$PYTHON" -m venv venv
             dos2unix "venv/Scripts/activate"
             . "venv/Scripts/activate"
-            $PYTHON -m ensurepip --upgrade
-            pip install poetry
+
           else
+            export PIPX_HOME="$PWD/pipx"
+            export PIPX_BIN_DIR="$PWD/pipx/bin"
+            
             git clone https://github.com/pyenv/pyenv.git pyenv
             export PYENV_ROOT="$PWD/pyenv"
             export PATH="$PYENV_ROOT/bin:$PATH"
@@ -79,13 +80,16 @@ functions:
             git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
             SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk MACOSX_DEPLOYMENT_TARGET=10.14 pyenv install ${python_version}
             pyenv virtualenv ${python_version} venv-${python_version}
-
             pyenv global venv-${python_version}
 
             pip install --upgrade pip
-            pip install poetry
           fi
-          poetry install
+
+          export PATH="$PATH:$PIPX_BIN_DIR"
+          rm -rf "$PIPX_HOME"
+
+          pip install --disable-pip-version-check --quiet pipx==1.1.0
+          pipx install poetry==1.2.2
 
   check_version_update:
     - command: shell.exec
