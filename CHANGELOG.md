@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 - 2023-10-18
+## 5.0.0 - 2023-10-18
 - Lock `pyyaml` to `6.0.1` to avoid cython issues.
 
 ## 4.0.0 - 2023-07-31
