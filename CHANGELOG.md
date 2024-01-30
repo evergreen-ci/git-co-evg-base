@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.0.1 - 2024-01-30
+- Pin `evergreen.py` to `3.6.18` to fix incompatible type `dict`.
+
 ## 5.0.0 - 2023-10-18
 - Lock `pyyaml` to `6.0.1` to avoid cython issues.
 
