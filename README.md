@@ -40,7 +40,7 @@ Documentation can be found [here](https://evergreen-ci.github.io/git-co-evg-base
 
 ## Dependencies
 
-* Python 3.7 or later
+* Python 3.9 or later
 * git
 * [Evergreen config file](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
 * [Evergreen CLI](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
@@ -204,7 +204,7 @@ poetry install
 ### linting/formatting
 
 This project uses [black](https://black.readthedocs.io/en/stable/) and
-[isort](https://pycqa.github.io/isort/) for formatting.
+[isort](https://pycqa.github.io/isort/) for linting/formatting.
 
 ```bash
 poetry run black src tests
