@@ -213,7 +213,7 @@ poetry run isort src tests
 
 ### Running tests
 
-This project uses [pytest](https://docs.pytest.org/en/6.2.x/) for testing.
+This project uses [pytest](https://docs.pytest.org/) for testing.
 
 ```bash
 poetry run pytest
@@ -240,8 +240,8 @@ Please open a Github Pull Request for code review.
 
 ### Deployment
 
-Deployment to pypi is automatically triggered on merges to main.
+Deployment to [PyPi](https://pypi.org/project/git-co-evg-base/) is automatically triggered on merges to main.
 
 ## Resources
 
-* [Evergreen REST documentation](https://github.com/evergreen-ci/evergreen/wiki/REST-V2-Usage)
+* [Evergreen REST V2 documentation](https://github.com/evergreen-ci/evergreen/wiki/REST-V2-Usage/)

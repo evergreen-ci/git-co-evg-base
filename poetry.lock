@@ -304,14 +304,14 @@ files = [
 
 [[package]]
 name = "evergreen-py"
-version = "3.6.21"
+version = "3.6.22"
 description = "Python client for the Evergreen API"
 category = "main"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "evergreen_py-3.6.21-py3-none-any.whl", hash = "sha256:b9a0f8744c038b070d8b366fe5040de718fcd4e343d327afd77c3303a4eac18b"},
-    {file = "evergreen_py-3.6.21.tar.gz", hash = "sha256:f2bc418bd9e8948c7bc2facad2ef9d07ba4a312a9c3d209672135f07382ee4c4"},
+    {file = "evergreen_py-3.6.22-py3-none-any.whl", hash = "sha256:6cbc14c43fd464681fc4e228147feff5e295db705d7745ee571a8ba8bf662695"},
+    {file = "evergreen_py-3.6.22.tar.gz", hash = "sha256:d5a56d66765542c56c54b2c937dc18eb1af7d8d189a3804052c5a26f33f3742e"},
 ]
 
 [package.dependencies]
