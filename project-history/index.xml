@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     5.0.0 - 2023-10-18      Lock pyyaml to 6.0.1 to avoid cython issues.  4.0.0 - 2023-07-31      Add --display-variant-name optional argument.  3.0.6 - 2022-11-07      Change default build variants to required for mongo projects.  3.0.5 - 2022-08-29      Perform checkout by default when branch name is specified.  3.</description>
+      <description>Changelog     5.0.1 - 2024-01-30      Pin evergreen.py to 3.6.18 to fix incompatible type dict.  5.0.0 - 2023-10-18      Lock pyyaml to 6.0.1 to avoid cython issues.  4.0.0 - 2023-07-31      Add --display-variant-name optional argument.  3.0.6 - 2022-11-07      Change default build variants to required for mongo projects.  3.</description>
     </item>
     
   </channel>
