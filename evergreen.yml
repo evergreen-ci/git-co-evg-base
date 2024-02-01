@@ -4,9 +4,9 @@ buildvariants:
     run_on:
       - ubuntu1804-small
     tasks:
-      - name: unit_tests_3.7
-      - name: unit_tests_3.8
       - name: unit_tests_3.9
+      - name: unit_tests_3.10
+      - name: unit_tests_3.11
       - name: check_pypi_version
       - name: build_docs
 
@@ -15,18 +15,18 @@ buildvariants:
     run_on:
       - windows-64-vsMulti-small
     tasks:
-      - name: unit_tests_3.7
-      - name: unit_tests_3.8
       - name: unit_tests_3.9
+      - name: unit_tests_3.10
+      - name: unit_tests_3.11
 
   - display_name: macOS Mojave
     name: macos-1014
     run_on:
       - macos-1014
     tasks:
-      - name: unit_tests_3.7
-      - name: unit_tests_3.8
       - name: unit_tests_3.9
+      - name: unit_tests_3.10
+      - name: unit_tests_3.11
 
 functions:
   install_poetry:
@@ -72,7 +72,7 @@ functions:
           rm -rf "$PIPX_HOME"
 
           pip install --disable-pip-version-check --quiet pipx==1.1.0
-          pipx install poetry==1.2.2
+          pipx install poetry==1.3.2 --force
 
   run_tests:
     - command: shell.exec
@@ -129,28 +129,28 @@ post:
     file: src/junit-*.xml
 
 tasks:
-- name: unit_tests_3.7
-  commands:
-    - func: install_poetry
-      vars:
-        python_version: 3.7.1
-        short_python_version: 37
-    - func: run_tests
-
-- name: unit_tests_3.8
-  commands:
-    - func: install_poetry
-      vars:
-        python_version: 3.8.10
-        short_python_version: 38
-    - func: run_tests
-
 - name: unit_tests_3.9
   commands:
     - func: install_poetry
       vars:
         python_version: 3.9.2
         short_python_version: 39
+    - func: run_tests
+
+- name: unit_tests_3.10
+  commands:
+    - func: install_poetry
+      vars:
+        python_version: 3.10.11
+        short_python_version: 310
+    - func: run_tests
+
+- name: unit_tests_3.11
+  commands:
+    - func: install_poetry
+      vars:
+        python_version: 3.11.7
+        short_python_version: 311
     - func: run_tests
 
 - name: check_pypi_version

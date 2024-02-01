@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0 - 2024-01-31
+- Update Python version to 3.9.
+- Upgrade libraries.
+
 ## 5.0.1 - 2024-01-30
 - Pin `evergreen.py` to `3.6.18` to fix incompatible type `dict`.
 

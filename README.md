@@ -40,7 +40,7 @@ Documentation can be found [here](https://evergreen-ci.github.io/git-co-evg-base
 
 ## Dependencies
 
-* Python 3.7 or later
+* Python 3.9 or later
 * git
 * [Evergreen config file](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
 * [Evergreen CLI](https://github.com/evergreen-ci/evergreen/wiki/Using-the-Command-Line-Tool#downloading-the-command-line-tool)
@@ -204,7 +204,7 @@ poetry install
 ### linting/formatting
 
 This project uses [black](https://black.readthedocs.io/en/stable/) and
-[isort](https://pycqa.github.io/isort/) for formatting.
+[isort](https://pycqa.github.io/isort/) for linting/formatting.
 
 ```bash
 poetry run black src tests
@@ -213,7 +213,7 @@ poetry run isort src tests
 
 ### Running tests
 
-This project uses [pytest](https://docs.pytest.org/en/6.2.x/) for testing.
+This project uses [pytest](https://docs.pytest.org/) for testing.
 
 ```bash
 poetry run pytest
@@ -240,8 +240,8 @@ Please open a Github Pull Request for code review.
 
 ### Deployment
 
-Deployment to pypi is automatically triggered on merges to main.
+Deployment to [PyPi](https://pypi.org/project/git-co-evg-base/) is automatically triggered on merges to main.
 
 ## Resources
 
-* [Evergreen REST documentation](https://github.com/evergreen-ci/evergreen/wiki/REST-V2-Usage)
+* [Evergreen REST V2 documentation](https://github.com/evergreen-ci/evergreen/wiki/REST-V2-Usage/)
