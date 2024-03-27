@@ -236,7 +236,7 @@ Please include a description what is added for each new version in `CHANGELOG.md
 
 ### Code Review
 
-Please open a Github Pull Request for code review.
+Please open a Github Pull Request for code review. This project uses the merge queue for merges to the default branch.
 
 ### Deployment
 
