@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.0.1 - 2024-03-27
+- Merge with the GitHub merge queue (no code changes)
+
 ## 6.0.0 - 2024-01-31
 - Update Python version to 3.9.
 - Upgrade libraries.
