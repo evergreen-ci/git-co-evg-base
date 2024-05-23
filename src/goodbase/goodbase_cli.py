@@ -203,12 +203,10 @@ class GoodBaseOrchestrator:
             table.add_column("Successful Tasks")
             table.add_column("Run Tasks")
 
-            display_name_regex = 
-
             for rule in group.rules:
                 table.add_row(
-                    "\n".join(rule.build_variant_regex),
-                    "\n".join(rule.display_name_regex),
+                    "\n".join(rule.build_variant_regex) if rule.build_variant_regex else "",
+                    "\n".join(rule.display_name_regex) if rule.display_name_regex else "",
                     f"{rule.success_threshold}" if rule.success_threshold else "",
                     f"{rule.run_threshold}" if rule.run_threshold else "",
                     "\n".join(rule.successful_tasks) if rule.successful_tasks else "",

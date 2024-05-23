@@ -39,9 +39,11 @@ class BuildChecks(BaseModel):
         :param display_name: Display name of build variant to check.
         :return: True if these checks apply to the given build variant.
         """
-        if self.build_variant_regex:
+        if self.build_variant_regex and build_variant:
             return any(re.match(bv_regex, build_variant) for bv_regex in self.build_variant_regex)
-        return any(re.match(dn_regex, display_name) for dn_regex in self.display_name_regex)
+        elif self.display_name_regex and display_name:
+            return any(re.match(dn_regex, display_name) for dn_regex in self.display_name_regex)
+        return False
 
     def check(self, build_status: BuildStatus) -> bool:
         """
