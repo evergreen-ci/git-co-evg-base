@@ -441,7 +441,7 @@ def main(
     if build_variant and display_variant_name:
         click.echo(
             click.style(
-                f"Can only specify `--build-variant` or `--display-variant-name`, not both",
+                "Can only specify `--build-variant` or `--display-variant-name`, not both",
                 fg="red",
             )
         )
