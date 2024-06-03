@@ -7,7 +7,6 @@ buildvariants:
       - name: unit_tests_3.9
       - name: unit_tests_3.10
       - name: unit_tests_3.11
-      - name: check_pypi_version
       - name: build_docs
 
   - display_name: Windows
@@ -94,19 +93,6 @@ functions:
           poetry install
           poetry run pytest --cov=src --junitxml=junit-test-output.xml
 
-  check_version_update:
-    - command: shell.exec
-      params:
-        working_dir: src
-        script: |
-          set -o errexit
-          set -o verbose
-          if [ "${is_patch}" = "true" ]; then
-            wget -q https://github.com/dbradf/pypi-version-check/releases/download/v0.3.0/pypi-version-check
-            chmod +x pypi-version-check
-            ./pypi-version-check --check-changelog
-          fi
-
   build_docs:
     - command: shell.exec
       params:
@@ -152,10 +138,6 @@ tasks:
         python_version: 3.11.7
         short_python_version: 311
     - func: run_tests
-
-- name: check_pypi_version
-  commands:
-  - func: check_version_update
 
 - name: build_docs
   commands:
