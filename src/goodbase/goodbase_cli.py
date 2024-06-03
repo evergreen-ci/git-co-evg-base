@@ -438,9 +438,18 @@ def main(
         output_format=output_format,
     )
 
+    if build_variant and display_variant_name:
+        click.echo(
+            click.style(
+                f"Can only specify `--build-variant` or `--display-variant-name`, not both",
+                fg="red",
+            )
+        )
+        sys.exit(1)
+
     if build_variant is not None:
         build_checks = BuildChecks(build_variant_regex=build_variant)
-    elif display_variant_name is not None:
+    if display_variant_name is not None:
         build_checks = BuildChecks(display_variant_regex=display_variant_name)
 
     if pass_threshold is not None:

@@ -24,19 +24,19 @@ class TestShouldApply:
         assert checker.should_apply(build_variant=build_variant, display_name=display_name)
 
     @pytest.mark.parametrize(
-        "build_variant_regex,display_name_regex",
+        "build_variant_regex,display_name",
         [
             (["^match-build-variant$"], []),
             (["^not-match$"], []),
             (["^match-build-variant$"], []),
         ],
     )
-    def test_build_variant_regexes_match_partial(self, build_variant_regex, display_name_regex):
+    def test_build_variant_regexes_match_partial(self, build_variant_regex, display_name):
         checker = under_test.BuildChecks(
-            build_variant_regex=build_variant_regex, display_name_regex=[]
+            build_variant_regex=build_variant_regex, display_name=display_name
         )
 
-        assert checker.should_apply(build_variant="match-build-variant", display_name=None)
+        assert checker.should_apply(build_variant="match-build-variant", display_name=[])
 
     @pytest.mark.parametrize(
         "build_variant_regex,display_name_regex",
