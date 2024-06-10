@@ -2,6 +2,7 @@
 import json
 import logging
 import os.path
+import re
 import sys
 from pathlib import Path
 from typing import Dict, List, NamedTuple, Optional
@@ -10,6 +11,7 @@ import click
 import inject
 import structlog
 import yaml
+from click.core import ParameterSource
 from evergreen import EvergreenApi, RetryingEvergreenApi
 from plumbum import ProcessExecutionError
 from rich.console import Console
@@ -437,6 +439,22 @@ def main(
         branch_name=branch,
         output_format=output_format,
     )
+    if display_variant_name:
+        display_variant_name_checks = display_variant_name
+
+    if ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT:
+        for (
+            project_regex,
+            default_display_variant_name_regexes,
+        ) in PROJECT_REGEX_TO_DEFAULT_DISPLAY_VARIANT_NAME_REGEXES.items():
+            if re.match(project_regex, evg_project):
+                LOGGER.debug(
+                    "Found default build variant display name regexes for evg project",
+                    evg_project_regex=project_regex,
+                    default_display_variant_name_regexes=default_display_variant_name_regexes,
+                )
+                display_variant_name_checks = default_display_variant_name_regexes
+                break
 
     if build_variant and display_variant_name:
         click.echo(
@@ -450,7 +468,7 @@ def main(
     if build_variant is not None:
         build_checks = BuildChecks(build_variant_regex=build_variant)
     if display_variant_name is not None:
-        build_checks = BuildChecks(display_variant_regex=display_variant_name)
+        build_checks = BuildChecks(display_variant_regex=display_variant_name_checks)
 
     if pass_threshold is not None:
         build_checks.success_threshold = pass_threshold
