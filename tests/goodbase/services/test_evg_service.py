@@ -251,9 +251,7 @@ class TestCheckVersion:
             for i in range(n_builds)
         }
         mock_version = build_mock_version(mock_build_map)
-        build_checks = BuildChecks(
-            build_variant_regex=[".*"], display_name_regex=[".*"], run_threshold=0.9
-        )
+        build_checks = BuildChecks(build_variant_regex=[".*"], run_threshold=0.9)
 
         result = evg_service.check_version(mock_version, [build_checks])
 
@@ -270,9 +268,7 @@ class TestCheckVersion:
             for i in range(n_builds)
         }
         mock_version = build_mock_version(mock_build_map)
-        build_checks = BuildChecks(
-            build_variant_regex=[".*"], display_name_regex=[".*"], run_threshold=0.9
-        )
+        build_checks = BuildChecks(build_variant_regex=[".*"], run_threshold=0.9)
 
         result = evg_service.check_version(mock_version, [build_checks])
 
@@ -291,7 +287,6 @@ class TestCheckVersion:
         mock_version = build_mock_version(mock_build_map)
         build_checks = BuildChecks(
             build_variant_regex=[".*"],
-            display_name_regex=[".*"],
             run_threshold=0.9,
             failure_threshold=0.1,
         )
@@ -318,7 +313,6 @@ class TestCheckVersion:
         mock_version = build_mock_version(mock_build_map)
         build_checks = BuildChecks(
             build_variant_regex=[".*"],
-            display_name_regex=[".*"],
             run_threshold=0.9,
             failure_threshold=0.1,
         )
@@ -339,7 +333,7 @@ class TestCheckVersion:
         }
         mock_version = build_mock_version(mock_build_map)
         build_checks = BuildChecks(
-            build_variant_regex=[".*"], display_name_regex=[".*"], run_threshold=0.9
+            build_variant_regex=[".*"], display_name_regex=None, run_threshold=0.9
         )
 
         result = evg_service.check_version(mock_version, [build_checks])
@@ -357,9 +351,7 @@ class TestCheckVersion:
             for i in range(n_builds)
         }
         mock_version = build_mock_version(mock_build_map)
-        build_checks = BuildChecks(
-            build_variant_regex=["^build_0$"], display_name_regex=["^build 0$"], run_threshold=0.9
-        )
+        build_checks = BuildChecks(build_variant_regex=["^build_0$"], run_threshold=0.9)
 
         result = evg_service.check_version(mock_version, [build_checks])
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.0 - 2024-06-10
+- `--display-variant-name` and `--build-variant` are `xor`'d together, instead of `or`'d.
+
 ## 6.0.1 - 2024-03-27
 - Merge with the GitHub merge queue (no code changes)
 
