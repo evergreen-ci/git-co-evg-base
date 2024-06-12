@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     7.0.0 - 2024-06-10      --display-variant-name and --build-variant are xor&amp;rsquo;d together, instead of or&amp;rsquo;d.  6.0.1 - 2024-03-27      Merge with the GitHub merge queue (no code changes)  6.0.0 - 2024-01-31      Update Python version to 3.9. Upgrade libraries.  5.0.1 - 2024-01-30      Pin evergreen.py to 3.6.18 to fix incompatible type dict.</description>
+      <description>Changelog     7.0.1 - 2024-06-11      Fix for unbound variable. Add back support for mongo default variants  7.0.0 - 2024-06-10      --display-variant-name and --build-variant are xor&amp;rsquo;d together, instead of or&amp;rsquo;d.  6.0.1 - 2024-03-27      Merge with the GitHub merge queue (no code changes)  6.0.0 - 2024-01-31      Update Python version to 3.</description>
     </item>
     
   </channel>
