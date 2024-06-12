@@ -207,8 +207,8 @@ class GoodBaseOrchestrator:
 
             for rule in group.rules:
                 table.add_row(
-                    "\n".join(rule.build_variant_regex) if rule.build_variant_regex else "",
-                    "\n".join(rule.display_name_regex) if rule.display_name_regex else "",
+                    "\n".join(rule.build_variant_regex),
+                    "\n".join(rule.display_name_regex),
                     f"{rule.success_threshold}" if rule.success_threshold else "",
                     f"{rule.run_threshold}" if rule.run_threshold else "",
                     "\n".join(rule.successful_tasks) if rule.successful_tasks else "",
@@ -342,8 +342,8 @@ def main(
     fail_threshold: float,
     evg_config_file: str,
     evg_project: str,
-    build_variant: Optional[List[str]],
-    display_variant_name: Optional[List[str]],
+    build_variant: List[str],
+    display_variant_name: List[str],
     commit_lookback: int,
     commit_limit: Optional[str],
     timeout_secs: Optional[int],
@@ -412,6 +412,15 @@ def main(
     evg_config_file = os.path.expanduser(evg_config_file)
     evg_api = RetryingEvergreenApi.get_api(config_file=evg_config_file)
 
+    if build_variant and display_variant_name:
+        click.echo(
+            click.style(
+                "Can only specify `--build-variant` or `--display-variant-name`, not both",
+                fg="red",
+            )
+        )
+        sys.exit(1)
+
     if branch:
         if git_operation == GitAction.NONE:
             git_operation = GitAction.CHECKOUT
@@ -440,18 +449,12 @@ def main(
         output_format=output_format,
     )
 
-    if build_variant and display_variant_name:
-        click.echo(
-            click.style(
-                "Can only specify `--build-variant` or `--display-variant-name`, not both",
-                fg="red",
-            )
-        )
-        sys.exit(1)
-
     display_variant_name_checks = display_variant_name
 
-    if ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT:
+    if (
+        not build_variant
+        and ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT
+    ):
         for (
             project_regex,
             default_display_variant_name_regexes,
@@ -465,10 +468,9 @@ def main(
                 display_variant_name_checks = default_display_variant_name_regexes
                 break
 
-    if build_variant:
-        build_checks = BuildChecks(build_variant_regex=build_variant)
-    elif display_variant_name_checks:
-        build_checks = BuildChecks(display_variant_regex=display_variant_name_checks)
+    build_checks = BuildChecks(
+        build_variant_regex=build_variant, display_name_regex=display_variant_name_checks
+    )
 
     if pass_threshold is not None:
         build_checks.success_threshold = pass_threshold
