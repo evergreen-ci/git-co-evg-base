@@ -1,6 +1,7 @@
 # Changelog
 ## 7.0.1 - 2024-06-11
 - Fix for unbound variable.
+- Add back support for mongo default variants
 
 ## 7.0.0 - 2024-06-10
 - `--display-variant-name` and `--build-variant` are `xor`'d together, instead of `or`'d.
