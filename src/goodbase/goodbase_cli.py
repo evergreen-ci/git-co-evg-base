@@ -440,6 +440,15 @@ def main(
         output_format=output_format,
     )
 
+    if build_variant and display_variant_name:
+        click.echo(
+            click.style(
+                "Can only specify `--build-variant` or `--display-variant-name`, not both",
+                fg="red",
+            )
+        )
+        sys.exit(1)
+
     display_variant_name_checks = display_variant_name
 
     if ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT:
@@ -456,18 +465,9 @@ def main(
                 display_variant_name_checks = default_display_variant_name_regexes
                 break
 
-    if build_variant and display_variant_name:
-        click.echo(
-            click.style(
-                "Can only specify `--build-variant` or `--display-variant-name`, not both",
-                fg="red",
-            )
-        )
-        sys.exit(1)
-
-    if build_variant is not None:
+    if build_variant:
         build_checks = BuildChecks(build_variant_regex=build_variant)
-    if display_variant_name is not None:
+    elif display_variant_name_checks:
         build_checks = BuildChecks(display_variant_regex=display_variant_name_checks)
 
     if pass_threshold is not None:
