@@ -439,8 +439,8 @@ def main(
         branch_name=branch,
         output_format=output_format,
     )
-    if display_variant_name:
-        display_variant_name_checks = display_variant_name
+
+    display_variant_name_checks = display_variant_name
 
     if ctx.get_parameter_source("display_variant_name") == ParameterSource.DEFAULT:
         for (
