@@ -43,7 +43,7 @@ class SearchService:
         :return: First git revision to match the given criteria if it exists.
         """
         if version_override:
-            versions = [self.evg_api.version_by_id(version_override)]
+            versions = iter([self.evg_api.version_by_id(version_override)])
             # versions = [self.evg_api.version_by_id("mongodb_mongo_master_2b97def86f790965b512bbba1c6b88bba000aa64")]
         else:
             versions = self.evg_api.versions_by_project(evg_project)
