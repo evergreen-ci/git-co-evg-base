@@ -32,7 +32,9 @@ class SearchService:
         self.evg_service = evg_service
         self.options = options
 
-    def find_revision(self, evg_project: str, build_checks: List[BuildChecks]) -> Optional[str]:
+    def find_revision(
+        self, evg_project: str, build_checks: List[BuildChecks], version_override: Optional[str]
+    ) -> Optional[str]:
         """
         Iterate through revisions until one is found that matches the given criteria.
 
@@ -40,7 +42,11 @@ class SearchService:
         :param build_checks: Criteria to enforce.
         :return: First git revision to match the given criteria if it exists.
         """
-        versions = self.evg_api.versions_by_project(evg_project)
+        if version_override:
+            versions = [self.evg_api.version_by_id(version_override)]
+            # versions = [self.evg_api.version_by_id("mongodb_mongo_master_2b97def86f790965b512bbba1c6b88bba000aa64")]
+        else:
+            versions = self.evg_api.versions_by_project(evg_project)
 
         if self.options.output_format in {OutputFormat.YAML, OutputFormat.JSON}:
             stable_revision = self._find_stable_revision(versions, build_checks)
@@ -72,7 +78,6 @@ class SearchService:
                 return None
 
             LOGGER.debug("Checking version", commit=evg_version.revision)
-
             if self.evg_service.check_version(evg_version, build_checks):
                 return evg_version.revision
 
