@@ -158,6 +158,7 @@ Options:
   --commit-lookback INTEGER       Number of commits to check before giving up.  [default: 50]
   --timeout-secs INTEGER          Number of seconds to search for before giving up.
   --commit-limit TEXT             Oldest commit to check before giving up.
+  --version_override              Select a single version to check.
   --git-operation [checkout|rebase|merge|none]
                                   Git operations to perform with found commit.  [default: none]
   -b, --branch TEXT               Name of branch to create on checkout. When specified, git-

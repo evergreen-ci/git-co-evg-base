@@ -1,4 +1,7 @@
 # Changelog
+## 7.0.2 - 2024-07-24
+- Add an option to check only one specific version with version_override
+
 ## 7.0.1 - 2024-06-11
 - Fix for unbound variable.
 - Add back support for mongo default variants
