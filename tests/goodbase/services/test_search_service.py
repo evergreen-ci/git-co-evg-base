@@ -52,7 +52,7 @@ class TestFindRevision:
 
         search_service._find_stable_revision = assert_progress_bar
 
-        search_service.find_revision("project", [])
+        search_service.find_revision("project", [], None)
 
     @pytest.mark.parametrize("format", [OutputFormat.YAML, OutputFormat.JSON])
     def test_find_revision_should_not_use_progressbar_for_non_plaintest(
@@ -64,7 +64,7 @@ class TestFindRevision:
         options.output_format = format
         search_service._find_stable_revision = assert_no_progress_bar
 
-        search_service.find_revision("project", [])
+        search_service.find_revision("project", [], None)
 
 
 class TestFindStableRevision:
