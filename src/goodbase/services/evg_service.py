@@ -80,12 +80,8 @@ class EvergreenService:
         """
         annotations = self.evg_api.get_task_annotation(task.task_id)
         for annotation in annotations:
-            for issue in annotation.issues:
-                if issue.issue_key[:3] == "BF-":
-                    return True
-            for issue in annotation.suspected_issues:
-                if issue.issue_key[:3] == "BF-":
-                    return True
+            if annotation.issues:
+                return True
         return False
 
     def check_version(
