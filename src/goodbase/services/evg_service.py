@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import inject
 import structlog
 import yaml
-from evergreen import Build, EvergreenApi, Version, Task
+from evergreen import Build, EvergreenApi, Task, Version
 from requests.exceptions import HTTPError
 
 from goodbase.build_checker import BuildChecks
@@ -71,7 +71,7 @@ class EvergreenService:
             if task.is_success() or (allow_known_failures and self._is_task_a_known_failure(task))
         }
 
-    def _is_task_a_known_failure(self, task) -> bool:
+    def _is_task_a_known_failure(self, task: Task) -> bool:
         """
         Check if a task is a known failure - annotated with an issue or suspected issue that has a BF prefix.
 
