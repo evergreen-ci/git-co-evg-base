@@ -138,6 +138,7 @@ class GoodBaseOrchestrator:
         self,
         evg_project: str,
         build_checks: List[BuildChecks],
+        allow_known_failures: bool,
         version_override: Optional[str] = None,
     ) -> Optional[RevisionInformation]:
         """
@@ -147,7 +148,9 @@ class GoodBaseOrchestrator:
         :param build_checks: Criteria to enforce.
         :return: Revision that was checked out, if it exists.
         """
-        revision = self.search_service.find_revision(evg_project, build_checks, version_override)
+        revision = self.search_service.find_revision(
+            evg_project, build_checks, version_override, allow_known_failures
+        )
         if revision:
             module_revisions = self.evg_service.get_modules_revisions(evg_project, revision)
             errmsg = self.attempt_git_operation(self.options.operation, revision)
@@ -291,6 +294,7 @@ def configure_logging(verbose: bool) -> None:
     help="Number of commits to check before giving up.",
 )
 @click.option("--version-override", help="A specific version to test.")
+@click.option("--allow-known-failures", type=bool, help="consider known failures as passing.")
 @click.option("--timeout-secs", type=int, help="Number of seconds to search for before giving up.")
 @click.option(
     "--commit-limit",
@@ -361,6 +365,7 @@ def main(
     override: bool,
     verbose: bool,
     version_override: Optional[str],
+    allow_known_failures: Optional[bool] = False,
 ) -> None:
     """
     Find and perform git actions on a recent commit that matches the specified criteria.
@@ -550,7 +555,9 @@ def main(
             )
             return
 
-        revision = orchestrator.checkout_good_base(evg_project, criteria, version_override)
+        revision = orchestrator.checkout_good_base(
+            evg_project, criteria, allow_known_failures, version_override
+        )
 
         if revision:
             revision_dict = {

@@ -1,4 +1,7 @@
 # Changelog
+## 7.0.3 - 2024-07-25
+- Add an option to ignore task failures for known failures
+
 ## 7.0.2 - 2024-07-24
 - Add an option to check only one specific version with version_override
 

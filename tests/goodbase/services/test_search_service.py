@@ -47,7 +47,7 @@ def search_service(evg_api, evg_service, options):
 
 class TestFindRevision:
     def test_find_revision_should_use_progressbar_for_plaintext(self, search_service):
-        def assert_progress_bar(bar, _checks):
+        def assert_progress_bar(bar, _checks, _allow_known_failures):
             assert isinstance(bar, ProgressBar)
 
         search_service._find_stable_revision = assert_progress_bar
@@ -58,7 +58,7 @@ class TestFindRevision:
     def test_find_revision_should_not_use_progressbar_for_non_plaintest(
         self, format, search_service, options
     ):
-        def assert_no_progress_bar(bar, _checks):
+        def assert_no_progress_bar(bar, _checks, _allow_known_failures):
             assert not isinstance(bar, ProgressBar)
 
         options.output_format = format
@@ -76,17 +76,17 @@ class TestFindStableRevision:
         revision = search_service._find_stable_revision(version_list, checks)
 
         assert version_list[3].revision == revision
-        evg_service.check_version.assert_any_call(version_list[0], checks)
+        evg_service.check_version.assert_any_call(version_list[0], checks, False)
 
     def test_no_good_revision_should_be_return_none(self, search_service, evg_service):
         version_list = [MagicMock(spec=Version, revision=f"abc_{i}") for i in range(20)]
         checks = [MagicMock(spec=BuildChecks)]
         evg_service.check_version.return_value = False
 
-        revision = search_service._find_stable_revision(version_list, checks)
+        revision = search_service._find_stable_revision(version_list, checks, False)
 
         assert revision is None
-        evg_service.check_version.assert_any_call(version_list[0], checks)
+        evg_service.check_version.assert_any_call(version_list[0], checks, False)
 
     def test_no_good_revision_before_limit_should_be_return_none(
         self, search_service, evg_service, options
@@ -99,4 +99,4 @@ class TestFindStableRevision:
         revision = search_service._find_stable_revision(version_list, checks)
 
         assert revision is None
-        evg_service.check_version.assert_any_call(version_list[0], checks)
+        evg_service.check_version.assert_any_call(version_list[0], checks, False)
