@@ -39,6 +39,7 @@ class EvergreenService:
         Get a summary of results for the given build.
 
         :param build: Evergreen build to analyze.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: Summary of build.
         """
         try:
@@ -65,24 +66,35 @@ class EvergreenService:
         )
 
     def _get_successful_tasks(self, tasks: List[Task], allow_known_failures: bool) -> set[str]:
+        """
+        Get the set of successful tasks from a list of tasks.
+
+        If allow_known_failures is True, known failures will be included in the set.
+        Otherwise only passing tasks will be returned.
+
+        :param tasks: The list of tasks to check.
+        :param allow_known_failures: If true - consider known failures as successful.
+        :return: The set of successful tasks according to the given criteria.
+        """
         return {
             task.display_name
             for task in tasks
-            if task.is_success() or (allow_known_failures and self._is_task_a_known_failure(task))
+            if task.is_success()
+            or (
+                allow_known_failures and task.is_completed() and self._is_task_a_known_failure(task)
+            )
         }
 
     def _is_task_a_known_failure(self, task: Task) -> bool:
         """
-        Check if a task is a known failure - annotated with an issue or suspected issue that has a BF prefix.
+        Check if a task is a known failure. A known failure will be annotated with an issue.
 
         :param task: the task to check.
         :return: True if the task is a known failure.
         """
-        annotations = self.evg_api.get_task_annotation(task.task_id)
-        for annotation in annotations:
-            if annotation.issues:
-                return True
-        return False
+        return any(
+            annotation.issues for annotation in self.evg_api.get_task_annotation(task.task_id)
+        )
 
     def check_version(
         self,
@@ -95,6 +107,7 @@ class EvergreenService:
 
         :param evg_version: Evergreen version to check.
         :param build_checks: Build criteria to use.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: True if the version matches the specified criteria.
         """
         build_status_list = self.get_build_statuses_for_version(

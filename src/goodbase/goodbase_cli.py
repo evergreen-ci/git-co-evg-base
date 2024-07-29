@@ -138,7 +138,7 @@ class GoodBaseOrchestrator:
         self,
         evg_project: str,
         build_checks: List[BuildChecks],
-        allow_known_failures: bool,
+        allow_known_failures: bool = False,
         version_override: Optional[str] = None,
     ) -> Optional[RevisionInformation]:
         """
@@ -294,7 +294,12 @@ def configure_logging(verbose: bool) -> None:
     help="Number of commits to check before giving up.",
 )
 @click.option("--version-override", help="A specific version to test.")
-@click.option("--allow-known-failures", type=bool, help="consider known failures as passing.")
+@click.option(
+    "--allow-known-failures",
+    is_flag=True,
+    default=False,
+    help="consider known failures as passing.",
+)
 @click.option("--timeout-secs", type=int, help="Number of seconds to search for before giving up.")
 @click.option(
     "--commit-limit",
@@ -364,8 +369,8 @@ def main(
     output_format: OutputFormat,
     override: bool,
     verbose: bool,
+    allow_known_failures: bool,
     version_override: Optional[str],
-    allow_known_failures: Optional[bool] = False,
 ) -> None:
     """
     Find and perform git actions on a recent commit that matches the specified criteria.
