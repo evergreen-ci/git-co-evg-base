@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import inject
 import structlog
 import yaml
-from evergreen import Build, EvergreenApi, Version
+from evergreen import Build, EvergreenApi, Task, Version
 from requests.exceptions import HTTPError
 
 from goodbase.build_checker import BuildChecks
@@ -32,12 +32,14 @@ class EvergreenService:
         self.evg_api = evg_api
         self.evg_cli_proxy = evg_cli_proxy
 
-    @staticmethod
-    def analyze_build(build: Build) -> Optional[BuildStatus]:
+    def analyze_build(
+        self, build: Build, allow_known_failures: bool = False
+    ) -> Optional[BuildStatus]:
         """
         Get a summary of results for the given build.
 
         :param build: Evergreen build to analyze.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: Summary of build.
         """
         try:
@@ -51,7 +53,7 @@ class EvergreenService:
             )
             return None
 
-        successful_tasks = {task.display_name for task in tasks if task.is_success()}
+        successful_tasks = self._get_successful_tasks(tasks, allow_known_failures)
         inactive_tasks = {task.display_name for task in tasks if task.is_undispatched()}
         all_tasks = {task.display_name for task in tasks}
 
@@ -63,15 +65,54 @@ class EvergreenService:
             all_tasks=all_tasks,
         )
 
-    def check_version(self, evg_version: Version, build_checks: List[BuildChecks]) -> bool:
+    def _get_successful_tasks(self, tasks: List[Task], allow_known_failures: bool) -> set[str]:
+        """
+        Get the set of successful tasks from a list of tasks.
+
+        If allow_known_failures is True, known failures will be included in the set.
+        Otherwise only passing tasks will be returned.
+
+        :param tasks: The list of tasks to check.
+        :param allow_known_failures: If true - consider known failures as successful.
+        :return: The set of successful tasks according to the given criteria.
+        """
+        return {
+            task.display_name
+            for task in tasks
+            if task.is_success()
+            or (
+                allow_known_failures and task.is_completed() and self._is_task_a_known_failure(task)
+            )
+        }
+
+    def _is_task_a_known_failure(self, task: Task) -> bool:
+        """
+        Check if a task is a known failure. A known failure will be annotated with an issue.
+
+        :param task: the task to check.
+        :return: True if the task is a known failure.
+        """
+        return any(
+            annotation.issues for annotation in self.evg_api.get_task_annotation(task.task_id)
+        )
+
+    def check_version(
+        self,
+        evg_version: Version,
+        build_checks: List[BuildChecks],
+        allow_known_failures: bool = False,
+    ) -> bool:
         """
         Check if the given version meets the specified criteria.
 
         :param evg_version: Evergreen version to check.
         :param build_checks: Build criteria to use.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: True if the version matches the specified criteria.
         """
-        build_status_list = self.get_build_statuses_for_version(evg_version, build_checks)
+        build_status_list = self.get_build_statuses_for_version(
+            evg_version, build_checks, allow_known_failures
+        )
         if not build_status_list:
             LOGGER.debug("No build status found for version, skipping", commit=evg_version.revision)
             return False
@@ -92,13 +133,17 @@ class EvergreenService:
         return success_check and (len(checks_with_failure_thresholds) == 0 or failure_check)
 
     def get_build_statuses_for_version(
-        self, evg_version: Version, build_checks: List[BuildChecks]
+        self,
+        evg_version: Version,
+        build_checks: List[BuildChecks],
+        allow_known_failures: bool = False,
     ) -> Optional[List[BuildStatus]]:
         """
         Get the build status for this version that match the predicate.
 
         :param evg_version: Evergreen version to check.
         :param build_checks: Build criteria to use.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: List of build statuses.
         """
         if not evg_version.build_variants_status or len(evg_version.build_variants_status) == 0:
@@ -106,7 +151,7 @@ class EvergreenService:
         builds = evg_version.get_builds()
         with Executor(max_workers=N_THREADS) as exe:
             jobs = [
-                exe.submit(self.analyze_build, build)
+                exe.submit(self.analyze_build, build, allow_known_failures)
                 for build in builds
                 if any(
                     bc.should_apply(build.build_variant, build.display_name) for bc in build_checks

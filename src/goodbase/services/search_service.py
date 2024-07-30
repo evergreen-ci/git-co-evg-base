@@ -33,13 +33,18 @@ class SearchService:
         self.options = options
 
     def find_revision(
-        self, evg_project: str, build_checks: List[BuildChecks], version_override: Optional[str]
+        self,
+        evg_project: str,
+        build_checks: List[BuildChecks],
+        version_override: Optional[str],
+        allow_known_failures: bool = False,
     ) -> Optional[str]:
         """
         Iterate through revisions until one is found that matches the given criteria.
 
         :param evg_project: Evergreen project to check.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: First git revision to match the given criteria if it exists.
         """
         if version_override:
@@ -48,25 +53,33 @@ class SearchService:
             versions = self.evg_api.versions_by_project(evg_project)
 
         if self.options.output_format in {OutputFormat.YAML, OutputFormat.JSON}:
-            stable_revision = self._find_stable_revision(versions, build_checks)
+            stable_revision = self._find_stable_revision(
+                versions, build_checks, allow_known_failures
+            )
         else:  # plaintext: show progress bar
             with click.progressbar(
                 versions,
                 length=self.options.max_lookback,
                 label=f"Searching {evg_project} revisions",
             ) as bar:
-                stable_revision = self._find_stable_revision(bar, build_checks)
+                stable_revision = self._find_stable_revision(
+                    bar, build_checks, allow_known_failures
+                )
 
         return stable_revision
 
     def _find_stable_revision(
-        self, evg_versions: Iterable[Version], build_checks: List[BuildChecks]
+        self,
+        evg_versions: Iterable[Version],
+        build_checks: List[BuildChecks],
+        allow_known_failures: bool = False,
     ) -> Optional[str]:
         """
         Find the latest revision that matches the specified criteria.
 
         :param evg_versions: Evergreen versions to iterate over.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: First git revision to match the given criteria if it exists.
         """
         start_time = perf_counter()
@@ -77,7 +90,7 @@ class SearchService:
                 return None
 
             LOGGER.debug("Checking version", commit=evg_version.revision)
-            if self.evg_service.check_version(evg_version, build_checks):
+            if self.evg_service.check_version(evg_version, build_checks, allow_known_failures):
                 return evg_version.revision
 
         return None

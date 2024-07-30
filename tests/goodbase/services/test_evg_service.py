@@ -7,6 +7,7 @@ import pytest
 import yaml
 from evergreen import Build, EvergreenApi, Manifest, Project, Task, Version
 from evergreen.manifest import ManifestModule
+from evergreen.task_annotations import IssueLink, TaskAnnotation
 from requests.exceptions import HTTPError
 
 import goodbase.services.evg_service as under_test
@@ -85,6 +86,12 @@ def evergreen_api():
     mock_evg_api.all_projects = lambda project_filter_fn: [
         p for p in project_list if project_filter_fn(p)
     ]
+
+    mocked_annotation = MagicMock(spec_set=IssueLink, issue_key="BF-1234")
+    mocked_annotations = MagicMock(spec_set=TaskAnnotation)
+    mocked_annotations.issues = [mocked_annotation]
+    mocked_annotations.suspected_issues = {}
+    mock_evg_api.get_task_annotation = MagicMock(return_value=[mocked_annotations])
     return mock_evg_api
 
 
@@ -114,7 +121,7 @@ class TestAnalyzeBuild:
             build_variant="my_build", display_name="my build", task_list=mock_task_list
         )
 
-        build_status = evg_service.analyze_build(mock_build)
+        build_status = evg_service.analyze_build(mock_build, False)
 
         assert build_status.build_name == "my build"
         assert build_status.successful_tasks == {task.display_name for task in mock_task_list}
@@ -128,7 +135,7 @@ class TestAnalyzeBuild:
             build_variant="my_build", display_name="my build", task_list=mock_task_list
         )
 
-        build_status = evg_service.analyze_build(mock_build)
+        build_status = evg_service.analyze_build(mock_build, False)
 
         assert build_status.build_name == "my build"
         assert build_status.successful_tasks == set()
@@ -142,10 +149,24 @@ class TestAnalyzeBuild:
             build_variant="my_build", display_name="my build", task_list=mock_task_list
         )
 
-        build_status = evg_service.analyze_build(mock_build)
+        build_status = evg_service.analyze_build(mock_build, False)
 
         assert build_status.build_name == "my build"
         assert build_status.successful_tasks == set()
+        assert build_status.inactive_tasks == set()
+        assert build_status.all_tasks == {task.display_name for task in mock_task_list}
+
+    def test_build_with_all_failed_known_tasks(self, evg_service):
+        n_tasks = 10
+        mock_task_list = [build_mock_task(f"task_{i}", TaskStatus.FAILED) for i in range(n_tasks)]
+        mock_build = build_mock_build(
+            build_variant="my_build", display_name="my build", task_list=mock_task_list
+        )
+
+        build_status = evg_service.analyze_build(mock_build, True)
+
+        assert build_status.build_name == "my build"
+        assert build_status.successful_tasks == {task.display_name for task in mock_task_list}
         assert build_status.inactive_tasks == set()
         assert build_status.all_tasks == {task.display_name for task in mock_task_list}
 
@@ -156,7 +177,7 @@ class TestAnalyzeBuild:
             build_variant="my_build", display_name="my build", task_list=mock_task_list
         )
 
-        build_status = evg_service.analyze_build(mock_build)
+        build_status = evg_service.analyze_build(mock_build, False)
 
         assert build_status.build_name == "my build"
         assert build_status.successful_tasks == {"task_0", "task_3", "task_6"}
@@ -255,7 +276,7 @@ class TestCheckVersion:
             build_variant_regex=[".*"], display_name_regex=[], run_threshold=0.9
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert not result
 
@@ -274,7 +295,7 @@ class TestCheckVersion:
             build_variant_regex=[".*"], display_name_regex=[], run_threshold=0.9
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert result
 
@@ -296,7 +317,7 @@ class TestCheckVersion:
             failure_threshold=0.1,
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert result
 
@@ -323,7 +344,7 @@ class TestCheckVersion:
             failure_threshold=0.1,
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert result
 
@@ -342,7 +363,7 @@ class TestCheckVersion:
             build_variant_regex=[".*"], display_name_regex=[], run_threshold=0.9
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert not result
 
@@ -361,7 +382,7 @@ class TestCheckVersion:
             build_variant_regex=["^build_0$"], display_name_regex=[], run_threshold=0.9
         )
 
-        result = evg_service.check_version(mock_version, [build_checks])
+        result = evg_service.check_version(mock_version, [build_checks], False)
 
         assert result
 

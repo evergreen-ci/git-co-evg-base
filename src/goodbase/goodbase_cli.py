@@ -138,6 +138,7 @@ class GoodBaseOrchestrator:
         self,
         evg_project: str,
         build_checks: List[BuildChecks],
+        allow_known_failures: bool = False,
         version_override: Optional[str] = None,
     ) -> Optional[RevisionInformation]:
         """
@@ -145,9 +146,12 @@ class GoodBaseOrchestrator:
 
         :param evg_project: Evergreen project to check.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: Revision that was checked out, if it exists.
         """
-        revision = self.search_service.find_revision(evg_project, build_checks, version_override)
+        revision = self.search_service.find_revision(
+            evg_project, build_checks, version_override, allow_known_failures
+        )
         if revision:
             module_revisions = self.evg_service.get_modules_revisions(evg_project, revision)
             errmsg = self.attempt_git_operation(self.options.operation, revision)
@@ -291,6 +295,12 @@ def configure_logging(verbose: bool) -> None:
     help="Number of commits to check before giving up.",
 )
 @click.option("--version-override", help="A specific version to test.")
+@click.option(
+    "--allow-known-failures",
+    is_flag=True,
+    default=False,
+    help="consider known failures as passing.",
+)
 @click.option("--timeout-secs", type=int, help="Number of seconds to search for before giving up.")
 @click.option(
     "--commit-limit",
@@ -360,6 +370,7 @@ def main(
     output_format: OutputFormat,
     override: bool,
     verbose: bool,
+    allow_known_failures: bool,
     version_override: Optional[str],
 ) -> None:
     """
@@ -550,7 +561,9 @@ def main(
             )
             return
 
-        revision = orchestrator.checkout_good_base(evg_project, criteria, version_override)
+        revision = orchestrator.checkout_good_base(
+            evg_project, criteria, allow_known_failures, version_override
+        )
 
         if revision:
             revision_dict = {
