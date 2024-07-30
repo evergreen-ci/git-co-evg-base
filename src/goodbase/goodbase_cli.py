@@ -146,6 +146,7 @@ class GoodBaseOrchestrator:
 
         :param evg_project: Evergreen project to check.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: Revision that was checked out, if it exists.
         """
         revision = self.search_service.find_revision(

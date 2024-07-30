@@ -143,6 +143,7 @@ class EvergreenService:
 
         :param evg_version: Evergreen version to check.
         :param build_checks: Build criteria to use.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: List of build statuses.
         """
         if not evg_version.build_variants_status or len(evg_version.build_variants_status) == 0:

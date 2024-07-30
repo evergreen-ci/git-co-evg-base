@@ -44,6 +44,7 @@ class SearchService:
 
         :param evg_project: Evergreen project to check.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: First git revision to match the given criteria if it exists.
         """
         if version_override:
@@ -78,6 +79,7 @@ class SearchService:
 
         :param evg_versions: Evergreen versions to iterate over.
         :param build_checks: Criteria to enforce.
+        :param allow_known_failures: Whether to allow known failures as passing ones.
         :return: First git revision to match the given criteria if it exists.
         """
         start_time = perf_counter()
