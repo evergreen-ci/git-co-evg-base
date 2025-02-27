@@ -597,9 +597,11 @@ def main(
             if not verbose:
                 click.echo(
                     "For more detailed information about what command is doing, use `--verbose` option\n"
-                    "For more information about how to specify criteria, see"
-                    " https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/",
                 )
+            click.echo(
+                "For more information about how to specify criteria, see"
+                " https://evergreen-ci.github.io/git-co-evg-base/concepts/criteria/",
+            )
             sys.exit(1)
 
 
