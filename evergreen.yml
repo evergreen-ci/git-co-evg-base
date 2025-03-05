@@ -18,15 +18,6 @@ buildvariants:
       - name: unit_tests_3.10
       - name: unit_tests_3.11
 
-  - display_name: macOS Mojave
-    name: macos-1014
-    run_on:
-      - macos-1014
-    tasks:
-      - name: unit_tests_3.9
-      - name: unit_tests_3.10
-      - name: unit_tests_3.11
-
 functions:
   install_poetry:
     - command: shell.exec
