@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://evergreen-ci.github.io/git-co-evg-base/project-history/CHANGELOG/</guid>
-      <description>Changelog     7.1.0 - 2024-07-25      Add an option to ignore task failures for known failures  7.0.2 - 2024-07-24      Add an option to check only one specific version with version_override  7.0.1 - 2024-06-11      Fix for unbound variable. Add back support for mongo default variants  7.0.0 - 2024-06-10      --display-variant-name and --build-variant are xor&amp;rsquo;d together, instead of or&amp;rsquo;d.</description>
+      <description>Changelog     7.1.1 - 2025-03-05      Remove helper message about enabling verbose if already enabled  7.1.0 - 2024-07-25      Add an option to ignore task failures for known failures  7.0.2 - 2024-07-24      Add an option to check only one specific version with version_override  7.0.1 - 2024-06-11      Fix for unbound variable.</description>
     </item>
     
   </channel>
