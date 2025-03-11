@@ -1,4 +1,7 @@
 # Changelog
+## 7.1.1 - 2025-03-05
+- Remove helper message about enabling verbose if already enabled
+
 ## 7.1.0 - 2024-07-25
 - Add an option to ignore task failures for known failures
 
