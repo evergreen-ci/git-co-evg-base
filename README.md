@@ -4,6 +4,10 @@ Find and perform git actions on a recent commit that matches the specified crite
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-co-evg-base) [![PyPI](https://img.shields.io/pypi/v/git-co-evg-base.svg)](https://pypi.org/project/git-co-evg-base/) [![Upload Python Package](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml/badge.svg)](https://github.com/evergreen-ci/git-co-evg-base/actions/workflows/deploy.yml) [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://evergreen-ci.github.io/git-co-evg-base/)
 
+## ‼️ Deprecated ‼️
+
+Functionality from this program has been rolled into the `evergreen last-revision` command.
+
 ## Table of contents
 
 - [git-co-evg-base](#git-co-evg-base)
